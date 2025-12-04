@@ -1,0 +1,98 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use server";
+
+import z from "zod";
+import { loginUser } from "./loginUser";
+import { zodValidator } from "@/lib/zodValidator";
+
+const registerValidationZodSchema = z
+    .object({
+        name: z.string().min(1, { message: "Name is required" }),
+        email: z.string().email({ message: "Valid email is required" }),
+        role: z
+            .enum(["ADMIN", "GUIDE", "TOURIST"] as const, { message: "Role is required" })
+            .optional(),
+        bio: z.string().optional(),
+        languages: z
+            .array(z.string())
+            .min(1, { message: "At least one language is required" })
+            .optional(),
+        password: z
+            .string()
+            .min(6, {
+                message: "Password is required and must be at least 6 characters long",
+            })
+            .max(100, {
+                message: "Password must be at most 100 characters long",
+            }),
+        confirmPassword: z
+            .string()
+            .min(6, {
+                message:
+                    "Confirm Password is required and must be at least 6 characters long",
+            }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords do not match",
+        path: ["confirmPassword"],
+    });
+
+
+export const registerPatient = async (_currentState: any, formData: FormData): Promise<any> => {
+    try {
+        const payload = {
+            name: formData.get("name"),
+            languages: formData.get("languages"),
+            email: formData.get("email"),
+            password: formData.get("password"),
+            confirmPassword: formData.get("confirmPassword"),
+        };
+
+        // ✅ Validate input
+        if (zodValidator(payload, registerValidationZodSchema).success === false) {
+            return zodValidator(payload, registerValidationZodSchema);
+        }
+
+        const validatedPayload: any = zodValidator(payload, registerValidationZodSchema).data;
+
+        // ✅ Prepare data for backend
+        const registerData = {
+            password: validatedPayload.password,
+            patient: {
+                name: validatedPayload.name,
+                address: validatedPayload.address,
+                email: validatedPayload.email,
+            },
+        };
+
+        const newFormData = new FormData();
+        newFormData.append("data", JSON.stringify(registerData));
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/patient/create-patient`, {
+            method: "POST",
+            body: newFormData,
+        }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                errors: [{ field: "general", message: data.message || "Registration failed" }],
+            };
+        };
+
+        if (data.success) {
+            await loginUser(_currentState, formData);
+        };
+
+        return data;
+    } catch (error: any) {
+        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+        if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+            throw error;
+        };
+        console.log(error);
+        return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : "Registration Failed. Please try again."}` };
+    }
+};

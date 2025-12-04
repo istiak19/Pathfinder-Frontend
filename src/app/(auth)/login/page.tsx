@@ -2,21 +2,21 @@ import { Metadata } from "next";
 import LoginPage from "../_component/LoginPage";
 
 export const metadata: Metadata = {
-    title: "Login | PHCareHub",
+    title: "Login | Pathfinder",
     description:
-        "Login to your PHCareHub account to manage appointments, connect with doctors, and access personalized healthcare services.",
+        "Log in to your Pathfinder account to discover destinations, book local guides, and manage your travel experiences.",
     openGraph: {
-        title: "Login | PHCareHub",
+        title: "Login | Pathfinder",
         description:
-            "Login to PHCareHub — your personal healthcare management platform.",
+            "Sign in to Pathfinder — your trusted platform for exploring new places and booking expert local guides.",
         url: "https://yourdomain.com/login",
-        siteName: "PHCareHub",
+        siteName: "Pathfinder",
         images: [
             {
                 url: "/og-login.png",
                 width: 1200,
                 height: 630,
-                alt: "PHCareHub Login",
+                alt: "Pathfinder Login",
             },
         ],
         locale: "en_US",
