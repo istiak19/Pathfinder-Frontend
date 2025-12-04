@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import logo from "../../../../public/logo/logo2.png";
+import pic from "../../../../public/register.jpg";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +19,7 @@ const RegisterPage = () => {
                 className="hidden md:flex md:w-1/2 justify-center"
             >
                 <Image
-                    src="/login-illustration.png"
+                    src={pic}
                     alt="Register illustration"
                     width={600}
                     height={600}

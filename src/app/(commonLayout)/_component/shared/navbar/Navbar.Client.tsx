@@ -7,6 +7,7 @@ import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuL
 import Image from "next/image";
 import logo from "../../../../../../public/logo/logo2.png";
 import { ModeToggle } from "@/components/ui/modeToggle";
+import LogoutButton from "@/app/(auth)/_component/LogoutButton";
 
 interface NavbarClientProps {
     isAuthenticated: boolean;
@@ -26,9 +27,9 @@ export default function NavbarClient({ isAuthenticated, role }: NavbarClientProp
     const dashboardLink =
         role === "ADMIN"
             ? { href: "/admin/dashboard", label: "Admin Dashboard" }
-            : role === "DOCTOR"
-                ? { href: "/doctor/dashboard", label: "Doctor Dashboard" }
-                : role === "PATIENT"
+            : role === "GUIDE"
+                ? { href: "/guide/dashboard", label: "Guide Dashboard" }
+                : role === "TOURIST"
                     ? { href: "/dashboard", label: "Patient Dashboard" }
                     : null;
 
@@ -71,8 +72,7 @@ export default function NavbarClient({ isAuthenticated, role }: NavbarClientProp
                 <div className="flex items-center gap-2">
                     <ModeToggle />
                     {isAuthenticated ? (
-                        // <LogoutButton />
-                        <Button>Logout</Button>
+                        <LogoutButton />
                     ) : (
                         <Button asChild size="sm">
                             <Link href="/login">Login</Link>

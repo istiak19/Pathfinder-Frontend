@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import logo from "../../../../public/logo/logo.png";
+import logo from "../../../../public/logo/logo2.png";
+import pic from "../../../../public/login.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,7 +19,7 @@ const LoginPage = ({ redirect }: { redirect?: string }) => {
                 className="hidden md:flex md:w-1/2 justify-center"
             >
                 <Image
-                    src="/login-illustration.png"
+                    src={pic}
                     alt="Login illustration"
                     width={600}
                     height={600}
