@@ -1,0 +1,48 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use server";
+
+import { serverFetch } from "@/lib/server-fetch";
+import { UserInfo } from "@/types/user.interface";
+
+export const getMeUser = async (): Promise<UserInfo | any> => {
+    try {
+        const response = await serverFetch.get("/auth/me", {
+            cache: "force-cache",
+            next: { tags: ["user-info"] }
+        });
+
+        const result = await response.json();
+
+        // if (result.success) {
+        //     const accessToken = await getCookies("accessToken");
+
+        //     if (!accessToken) {
+        //         throw new Error("No access token found");
+        //     };
+
+        //     const verifiedToken = jwt.verify(accessToken, process.env.JWT_SECRET as string) as JwtPayload;
+
+        //     userInfo = {
+        //         name: verifiedToken.name || "Unknown User",
+        //         email: verifiedToken.email,
+        //         role: verifiedToken.role,
+        //     }
+        // };
+
+        // userInfo = {
+        //     name: result.data.admin?.name || result.data.doctor?.name || result.data.patient?.name || result.data.name || "Unknown User",
+        //     ...result.data
+        // };
+
+        return result;
+
+    } catch (error: any) {
+        console.log(error);
+        return {
+            id: "",
+            name: "Unknown User",
+            email: "",
+            role: "TOURIST",
+        };
+    }
+}

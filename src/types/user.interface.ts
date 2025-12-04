@@ -55,7 +55,7 @@ export interface UserInterface {
     id: string;
     name: string;
     email: string;
-    role: "ADMIN" | "DOCTOR" | "PATIENT";
+    role: "ADMIN" | "GUIDE" | "TOURIST";
     profilePhoto?: string;
     exp?: number;
     iat?: number;
