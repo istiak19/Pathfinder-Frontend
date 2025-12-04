@@ -4,14 +4,17 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
 
+// ✅ Geist font, locally cached by Next.js
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -73,8 +76,6 @@ export default function RootLayout({
         >
           {children}
           <Toaster position="top-right" richColors />
-          {/* <LoginSuccessToast />
-          <LogoutSuccessToast />  */}
         </ThemeProvider>
       </body>
     </html>
