@@ -39,3 +39,23 @@ export const registerValidationZodSchema = z
         message: "Passwords do not match",
         path: ["confirmPassword"],
     });
+
+import { ListingCategory } from "@/types/listing.interface";
+
+export const createListingZodSchema = z.object({
+    title: z.string().min(3, "Title must be at least 3 characters long"),
+    description: z.string().min(10, "Description must be at least 10 characters long"),
+    itinerary: z.string().optional(),
+    price: z.number().int().min(0, "Price must be at least 0"),
+    duration: z.string().min(1, "Duration is required"),
+    meetingPoint: z.string().min(1, "Meeting point is required"),
+    maxGroupSize: z.number().int().min(1, "Max group size must be at least 1"),
+    category: z.nativeEnum(ListingCategory),
+    city: z.string().min(1, "City is required"),
+    images: z.array(z.string()).optional(),
+    guideId: z.string().uuid("Guide ID must be a valid UUID"),
+    status: z.string().optional(), // default "active"
+});
+
+// For update, everything can be partial
+export const updateListingZodSchema = createListingZodSchema.partial();

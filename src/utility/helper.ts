@@ -54,7 +54,7 @@ export const getDefaultDashboardRoute = (role: UserRole): string => {
     } else if (role === "GUIDE") {
         return "/guide/dashboard";
     } else if (role === "TOURIST") {
-        return "/dashboard";
+        return "/tourist/dashboard";
     } else {
         return "/";
     };
