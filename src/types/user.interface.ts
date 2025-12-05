@@ -67,7 +67,13 @@ export interface UserInfo {
     name: string;
     email: string;
     bio?: string;
+    languages?: string[];
     role: "ADMIN" | "GUIDE" | "TOURIST";
+    expertise?: string[];
+    dailyRate?: number | null;
+
+    // Tourist-only fields
+    travelPreferences?: string[];
 }
 
 export interface UserProfile {

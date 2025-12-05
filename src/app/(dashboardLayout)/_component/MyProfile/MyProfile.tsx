@@ -1,5 +1,6 @@
 "use client";
 
+import { MultiSelect } from "@/components/shared/MultiSelect";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +12,20 @@ import { getInitials } from "@/utility/formatters";
 import { Camera, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+
+
+enum ListingCategory {
+    FOOD = "FOOD",
+    ART = "ART",
+    ADVENTURE = "ADVENTURE",
+    NATURE = "NATURE",
+    CULTURE = "CULTURE",
+    SHOPPING = "SHOPPING",
+    SPORTS = "SPORTS",
+    WELLNESS = "WELLNESS",
+    HISTORY = "HISTORY",
+    ENTERTAINMENT = "ENTERTAINMENT",
+}
 
 interface MyProfileProps {
     userInfo: UserInfo;
@@ -164,17 +179,63 @@ const MyProfile: React.FC<MyProfileProps> = ({ userInfo }) => {
                                         disabled={isPending}
                                     />
                                 </div>
-                                
+
+                                {/* Languages */}
                                 <div className="space-y-2">
-                                    <Label htmlFor="contactNumber">Bio</Label>
-                                    <Input
-                                        id="bio"
-                                        name="bio"
-                                        value={userInfo.bio}
-                                        required
+
+                                    <MultiSelect
+                                        label="Languages Spoken"
+                                        name="languages"
+                                        options={["English", "Bangla", "Hindi", "Arabic", "Spanish"]}
+                                        defaultValue={userInfo.languages || []}
                                         disabled={isPending}
+                                        placeholder="English, Bangla, Spanish"
                                     />
+
                                 </div>
+
+                                {/* GUIDE Fields */}
+                                {userInfo.role === "GUIDE" && (
+                                    <>
+                                        <div className="space-y-2 md:col-span-2">
+                                            <MultiSelect
+                                                label="Expertise"
+                                                name="expertise"
+                                                options={Object.values(ListingCategory)}
+                                                defaultValue={userInfo.travelPreferences || []}
+                                                disabled={isPending}
+                                                placeholder="Beaches, Mountains, Food, Nature"
+                                            />
+                                        </div>
+
+                                        <div className="space-y-2 md:col-span-2">
+                                            <Label htmlFor="dailyRate">Daily Rate ($)</Label>
+                                            <Input
+                                                type="number"
+                                                id="dailyRate"
+                                                name="dailyRate"
+                                                required
+                                                placeholder="Enter your daily rate"
+                                                defaultValue={userInfo.dailyRate ?? ""}
+                                                disabled={isPending}
+                                            />
+                                        </div>
+                                    </>
+                                )}
+
+                                {/* TOURIST Fields */}
+                                {userInfo.role === "TOURIST" && (
+                                    <div className="space-y-2 md:col-span-2">
+                                        <MultiSelect
+                                            label="Travel Preferences"
+                                            name="travelPreferences"
+                                            options={Object.values(ListingCategory)}
+                                            defaultValue={userInfo.travelPreferences || []}
+                                            disabled={isPending}
+                                            placeholder="Beaches, Mountains, Food, Nature"
+                                        />
+                                    </div>
+                                )}
                             </div>
 
                             <div className="flex justify-end pt-4">
