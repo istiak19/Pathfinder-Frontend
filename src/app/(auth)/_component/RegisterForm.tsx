@@ -12,7 +12,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { registerUser } from "@/services/auth/registerUser";
 import { toast } from "sonner";
 import InputFieldError from "@/components/shared/InputFieldError";
-import { MultiSelectLanguages } from "./MultiSelect";
+import { MultiSelect } from "../../../components/shared/MultiSelect";
 
 const RegisterForm = () => {
     const [state, formAction, isPending] = useActionState(registerUser, null);
@@ -44,9 +44,14 @@ const RegisterForm = () => {
 
                 {/* Languages */}
                 <Field>
-                    <FieldLabel htmlFor="languages">Languages</FieldLabel>
-
-                    <MultiSelectLanguages name="languages" />
+                    <MultiSelect
+                        label="Languages Spoken"
+                        name="languages"
+                        options={["English", "Bangla", "Hindi", "Arabic", "Spanish"]}
+                        // defaultValue={ []}
+                        disabled={isPending}
+                        placeholder="English, Bangla, Spanish"
+                    />
 
                     <InputFieldError field="languages" state={state} />
                 </Field>

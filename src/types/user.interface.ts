@@ -56,15 +56,41 @@ export interface UserInterface {
     name: string;
     email: string;
     role: "ADMIN" | "GUIDE" | "TOURIST";
-    profilePhoto?: string;
+    profilePic?: string;
     exp?: number;
     iat?: number;
 };
 
 export interface UserInfo {
+    data: UserInfo;
+    profilePic: string | null;
     name: string;
     email: string;
-    role: UserRole;
+    bio?: string;
+    languages?: string[];
+    role: "ADMIN" | "GUIDE" | "TOURIST";
+    expertise?: string[];
+    dailyRate?: number | null;
+
+    // Tourist-only fields
+    travelPreferences?: string[];
+}
+
+export interface UserProfile {
+    id: string;
+    name: string;
+    email: string;
+    role: "ADMIN" | "GUIDE" | "TOURIST";
+    profilePic: string | null;
+    isVerified: boolean;
+    status: string;
+
+    bio: string;
+    languages: string[];
+    travelPreferences: string[];
+
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface AuthResponse {
