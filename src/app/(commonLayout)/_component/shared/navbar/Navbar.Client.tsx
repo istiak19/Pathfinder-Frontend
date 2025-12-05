@@ -20,8 +20,8 @@ export default function NavbarClient({ isAuthenticated, role }: NavbarClientProp
     const navigationLinks = [
         { href: "/", label: "Home" },
         { href: "/about", label: "About" },
-        { href: "/explore", label: "Explore" },
-        { href: "/pricing", label: "Pricing" },
+        { href: "/explore", label: "Explore Tours" },
+        { href: "/become-guide", label: "Become Guide" },
     ];
 
     const dashboardLink =
@@ -30,7 +30,7 @@ export default function NavbarClient({ isAuthenticated, role }: NavbarClientProp
             : role === "GUIDE"
                 ? { href: "/guide/dashboard", label: "Guide Dashboard" }
                 : role === "TOURIST"
-                    ? { href: "/dashboard", label: "Tourist Dashboard" }
+                    ? { href: "/tourist/dashboard", label: "Tourist Dashboard" }
                     : null;
 
     const navLinks = dashboardLink ? [...navigationLinks, dashboardLink] : navigationLinks;

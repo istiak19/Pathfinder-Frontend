@@ -40,24 +40,24 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
 
 export const guideNavItems: NavSection[] = [
     {
-        title: "Patient Management",
+        title: "Listings Management",
         items: [
             {
-                title: "Appointments",
-                href: "/doctor/dashboard/appointments",
+                title: "All listings",
+                href: "/guide/dashboard/listings",
                 icon: "Calendar",
                 badge: "3",
                 roles: ["GUIDE"],
             },
             {
-                title: "My Schedules",
-                href: "/doctor/dashboard/my-schedules",
+                title: "Add listing",
+                href: "/guide/dashboard/listing/create",
                 icon: "Clock",
                 roles: ["GUIDE"],
             },
             {
-                title: "Prescriptions",
-                href: "/doctor/dashboard/prescriptions",
+                title: "Bookings from travelers",
+                href: "/guide/dashboard/bookings",
                 icon: "FileText",
                 roles: ["GUIDE"],
             },
@@ -67,17 +67,17 @@ export const guideNavItems: NavSection[] = [
 
 export const touristNavItems: NavSection[] = [
     {
-        title: "Appointments",
+        title: "Trips",
         items: [
             {
-                title: "My Appointments",
-                href: "/dashboard/my-appointments",
+                title: "Trips",
+                href: "/tourist/dashboard/trips",
                 icon: "Calendar",
                 roles: ["TOURIST"],
             },
             {
-                title: "Book Appointment",
-                href: "/consultation",
+                title: "Wishlist",
+                href: "/tourist/dashboard/wishlist",
                 icon: "ClipboardList",
                 roles: ["TOURIST"],
             },
@@ -105,23 +105,23 @@ export const touristNavItems: NavSection[] = [
 
 export const adminNavItems: NavSection[] = [
     {
-        title: "User Management",
+        title: "Users Management",
         items: [
             {
-                title: "Admins",
-                href: "/admin/dashboard/admins-management",
+                title: "Manage users",
+                href: "/admin/dashboard/users",
                 icon: "Shield",
                 roles: ["ADMIN"],
             },
             {
-                title: "Doctors",
-                href: "/admin/dashboard/doctors-management",
+                title: "Manage users",
+                href: "/admin/dashboard/listings",
                 icon: "Stethoscope",
                 roles: ["ADMIN"],
             },
             {
-                title: "Patients",
-                href: "/admin/dashboard/patients-management",
+                title: "Manage all bookings",
+                href: "/admin/dashboard/bookings",
                 icon: "Users",
                 roles: ["ADMIN"],
             },
