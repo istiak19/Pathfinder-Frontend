@@ -7,9 +7,9 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { getDefaultDashboardRoute, isValidRedirectForRole } from "@/utility/helper";
 import { redirect } from "next/navigation";
 import { setCookies } from "@/utility/tokenHandlers";
+import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { UserRole } from "@/types/user.interface";
-import { serverFetch } from "@/lib/server-fetch";
 
 const loginSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -93,20 +93,7 @@ export const loginUser = async (_currentState: any, formData: FormData): Promise
         if (!result.success) {
             throw new Error(result.message || "Login failed");
         };
-
-        if (redirectTo && result.data.needPasswordChange) {
-            const requestedPath = redirectTo.toString();
-            if (isValidRedirectForRole(requestedPath, userRole)) {
-                redirect(`/reset-password?redirect=${requestedPath}`);
-            } else {
-                redirect("/reset-password");
-            }
-        }
-
-        if (result.data.needPasswordChange) {
-            redirect("/reset-password");
-        };
-
+        
         // Determine final redirect
         if (redirectTo) {
             const requestedPath = redirectTo.toString();
