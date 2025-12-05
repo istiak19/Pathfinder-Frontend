@@ -1,17 +1,17 @@
 import { getNavItemsByRole } from "@/lib/navItems.config";
 import { getMeUser } from "@/services/user/getMeUser";
-import { UserInfo } from "@/types/user.interface";
+// import { UserInfo } from "@/types/user.interface";
 import { getDefaultDashboardRoute } from "@/utility/helper";
 import DashboardNavbarContent from "./DashboardNavbarContent";
 
 const DashboardNavbar = async () => {
-    const userInfo = (await getMeUser()) as UserInfo;
-    const navItems = getNavItemsByRole(userInfo.role);
-    const dashboardHome = getDefaultDashboardRoute(userInfo.role);
+    const userInfo = (await getMeUser());
+    const navItems = getNavItemsByRole(userInfo?.data?.role);
+    const dashboardHome = getDefaultDashboardRoute(userInfo?.data?.role);
 
     return (
         <DashboardNavbarContent
-            userInfo={userInfo}
+            userInfo={userInfo?.data}
             navItems={navItems}
             dashboardHome={dashboardHome}
         />

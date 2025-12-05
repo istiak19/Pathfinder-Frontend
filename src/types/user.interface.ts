@@ -62,10 +62,28 @@ export interface UserInterface {
 };
 
 export interface UserInfo {
+    data: UserInfo;
     profilePic: string | null;
     name: string;
     email: string;
-    role: UserRole;
+    role: "ADMIN" | "GUIDE" | "TOURIST";
+}
+
+export interface UserProfile {
+    id: string;
+    name: string;
+    email: string;
+    role: "ADMIN" | "GUIDE" | "TOURIST";
+    profilePic: string | null;
+    isVerified: boolean;
+    status: string;
+
+    bio: string;
+    languages: string[];
+    travelPreferences: string[];
+
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface AuthResponse {

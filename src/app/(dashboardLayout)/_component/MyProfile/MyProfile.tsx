@@ -75,12 +75,12 @@ const MyProfile: React.FC<MyProfileProps> = ({ userInfo }) => {
                                 <Avatar className="h-32 w-32">
                                     {previewImage || userInfo.profilePic ? (
                                         <AvatarImage
-                                            src={previewImage ?? userInfo.profilePic ?? undefined}
-                                            alt={userInfo.name}
+                                            src={previewImage || userInfo?.profilePic || undefined}
+                                            alt={userInfo?.name}
                                         />
                                     ) : (
                                         <AvatarFallback className="text-3xl">
-                                            {getInitials(userInfo.name)}
+                                            {getInitials(userInfo?.name || "U")}
                                         </AvatarFallback>
                                     )}
                                 </Avatar>
@@ -102,12 +102,12 @@ const MyProfile: React.FC<MyProfileProps> = ({ userInfo }) => {
                             </div>
 
                             <div className="text-center">
-                                <p className="font-semibold text-lg">{userInfo.name}</p>
+                                <p className="font-semibold text-lg">{userInfo?.name}</p>
                                 <p className="text-sm text-muted-foreground">
                                     {userInfo.email}
                                 </p>
                                 <p className="text-xs text-muted-foreground mt-1 capitalize">
-                                    {userInfo.role.replace("_", " ")}
+                                    {userInfo?.role?.replace("_", " ")}
                                 </p>
                             </div>
                         </CardContent>

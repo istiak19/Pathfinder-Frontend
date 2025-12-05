@@ -24,7 +24,7 @@ const DashboardSidebarContent = ({ userInfo, navItems, dashboardHome }: Dashboar
                         <Image src={logo} alt="Logo" fill />
                     </div>
                     <span className="text-xl ml-2 font-bold bg-linear-to-r from-blue-600 to-cyan-500 text-transparent bg-clip-text">
-                        PHCareHub
+                        Pathfinder
                     </span>
                 </Link>
             </div>
@@ -82,13 +82,13 @@ const DashboardSidebarContent = ({ userInfo, navItems, dashboardHome }: Dashboar
                 <div className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
                         <span className="text-sm font-semibold text-primary">
-                            {userInfo.name.charAt(0).toUpperCase()}
+                            {userInfo?.name?.charAt(0)?.toUpperCase()}
                         </span>
                     </div>
                     <div className="flex-1 overflow-hidden">
-                        <p className="text-sm font-medium truncate">{userInfo.name}</p>
+                        <p className="text-sm font-medium truncate">{userInfo?.name}</p>
                         <p className="text-xs text-muted-foreground capitalize">
-                            {userInfo.role.toLowerCase()}
+                            {userInfo?.role?.toLowerCase()}
                         </p>
                     </div>
                 </div>
