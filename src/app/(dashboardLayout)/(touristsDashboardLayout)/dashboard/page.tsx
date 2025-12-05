@@ -1,5 +1,5 @@
 const TouristsDashboardPage = () => {
-    return <div>PatientDashboardPage</div>;
+    return <div>Tourist dashboard</div>;
 };
 
 export default TouristsDashboardPage;
