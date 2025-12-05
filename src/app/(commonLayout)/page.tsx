@@ -19,11 +19,11 @@ export default function Home() {
             <main className="overflow-x-hidden">
                 <HeroSection/>
                 <FeaturedCities />
-                {/* <TopGuides /> */}
-                {/* <HowItWorks /> */}
-                {/* <Categories /> */}
-                {/* <Testimonials /> */}
-                {/* <BecomeGuideCTA /> */}
+                <TopGuides />
+                <HowItWorks />
+                <Categories />
+                <Testimonials />
+                <BecomeGuideCTA />
             </main>
         </>
     );
