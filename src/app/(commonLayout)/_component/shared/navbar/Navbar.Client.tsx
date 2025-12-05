@@ -21,7 +21,7 @@ export default function NavbarClient({ isAuthenticated, role }: NavbarClientProp
         { href: "/", label: "Home" },
         { href: "/about", label: "About" },
         { href: "/explore", label: "Explore" },
-        { href: "/pricing", label: "Pricing" },
+        { href: "/become-guide", label: "Become Guide" },
     ];
 
     const dashboardLink =
