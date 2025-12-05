@@ -30,7 +30,7 @@ export default function NavbarClient({ isAuthenticated, role }: NavbarClientProp
             : role === "GUIDE"
                 ? { href: "/guide/dashboard", label: "Guide Dashboard" }
                 : role === "TOURIST"
-                    ? { href: "/dashboard", label: "Patient Dashboard" }
+                    ? { href: "/dashboard", label: "Tourist Dashboard" }
                     : null;
 
     const navLinks = dashboardLink ? [...navigationLinks, dashboardLink] : navigationLinks;

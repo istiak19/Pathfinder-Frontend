@@ -56,12 +56,13 @@ export interface UserInterface {
     name: string;
     email: string;
     role: "ADMIN" | "GUIDE" | "TOURIST";
-    profilePhoto?: string;
+    profilePic?: string;
     exp?: number;
     iat?: number;
 };
 
 export interface UserInfo {
+    profilePic: string | null;
     name: string;
     email: string;
     role: UserRole;
