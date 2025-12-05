@@ -20,7 +20,7 @@ export default function NavbarClient({ isAuthenticated, role }: NavbarClientProp
     const navigationLinks = [
         { href: "/", label: "Home" },
         { href: "/about", label: "About" },
-        { href: "/explore", label: "Explore" },
+        { href: "/explore", label: "Explore Tours" },
         { href: "/become-guide", label: "Become Guide" },
     ];
 

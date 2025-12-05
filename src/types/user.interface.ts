@@ -39,13 +39,17 @@ export interface ILogin {
     password: string
 };
 
-export interface HeartbeatLoaderProps {
+export interface LocalGuideLoaderProps {
     text?: string;
     size?: "sm" | "md" | "lg" | "xl";
     className?: string;
     animated?: boolean;
     showIcon?: boolean;
-};
+
+    // Local Guide specific
+    iconType?: "pin" | "compass" | "guide";
+    theme?: "travel" | "adventure" | "city" | "beach";
+}
 
 export interface AISuggestionPayload {
     symptoms: string;
