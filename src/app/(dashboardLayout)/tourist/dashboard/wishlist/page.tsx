@@ -1,9 +1,7 @@
-import React from 'react';
-
 const WishlistPage = () => {
     return (
         <div>
-            wishlist
+            Saved tours
         </div>
     );
 };
