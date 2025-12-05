@@ -66,6 +66,7 @@ export interface UserInfo {
     profilePic: string | null;
     name: string;
     email: string;
+    bio?: string;
     role: "ADMIN" | "GUIDE" | "TOURIST";
 }
 

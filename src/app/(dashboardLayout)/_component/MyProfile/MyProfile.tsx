@@ -155,11 +155,22 @@ const MyProfile: React.FC<MyProfileProps> = ({ userInfo }) => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="contactNumber">Contact Number</Label>
+                                    <Label htmlFor="contactNumber">Bio</Label>
                                     <Input
-                                        id="contactNumber"
-                                        name="contactNumber"
-                                        defaultValue={""}
+                                        id="bio"
+                                        name="bio"
+                                        value={userInfo.bio}
+                                        required
+                                        disabled={isPending}
+                                    />
+                                </div>
+                                
+                                <div className="space-y-2">
+                                    <Label htmlFor="contactNumber">Bio</Label>
+                                    <Input
+                                        id="bio"
+                                        name="bio"
+                                        value={userInfo.bio}
                                         required
                                         disabled={isPending}
                                     />
@@ -167,7 +178,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ userInfo }) => {
                             </div>
 
                             <div className="flex justify-end pt-4">
-                                <Button type="submit" disabled={isPending}>
+                                <Button type="submit" className="cursor-pointer" disabled={isPending}>
                                     {isPending ? (
                                         <>
                                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
