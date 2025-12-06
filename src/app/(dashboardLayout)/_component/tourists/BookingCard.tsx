@@ -42,7 +42,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
                 </span>
 
                 <span className="text-gray-500 dark:text-gray-400 text-sm">
-                    {format(new Date(booking.date), "dd MMM yyyy • hh:mm a")}
+                    Departure date: {format(new Date(booking.date), "dd MMM yyyy")}
                 </span>
             </div>
 
