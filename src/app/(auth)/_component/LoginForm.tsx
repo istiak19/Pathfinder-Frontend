@@ -26,8 +26,6 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
         if (state && !state.success && state.message) toast.error(state.message);
     }, [state]);
 
-    console.log(state)
-
     return (
         <motion.form
             action={formAction}
