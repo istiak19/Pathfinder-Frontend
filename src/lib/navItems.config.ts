@@ -46,7 +46,6 @@ export const guideNavItems: NavSection[] = [
                 title: "All listings",
                 href: "/guide/dashboard/listings",
                 icon: "Calendar",
-                badge: "3",
                 roles: ["GUIDE"],
             },
             {
