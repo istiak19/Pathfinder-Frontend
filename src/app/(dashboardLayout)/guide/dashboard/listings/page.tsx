@@ -24,7 +24,7 @@ const ListingManagementPage = async ({
     return (
         <div className="space-y-5">
             <ListingManagementHeader user={user?.data} />
-            <ListingsFilters listings={listing?.data} />
+            <ListingsFilters />
             <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
                 <ListingTable listings={listing?.data} />
                 <TablePagination

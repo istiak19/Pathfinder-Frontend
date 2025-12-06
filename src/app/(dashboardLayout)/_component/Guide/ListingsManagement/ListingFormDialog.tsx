@@ -196,6 +196,20 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
                             <InputFieldError state={state} field="maxGroupSize" />
                         </Field>
 
+                        {/* Max Group Size */}
+                        {isEdit && (<Field>
+                            <FieldLabel htmlFor="maxGroupSize" className="dark:text-gray-200">Status</FieldLabel>
+                            <Input
+                                id="status"
+                                name="status"
+                                placeholder="Status"
+                                min="1"
+                                defaultValue={state?.formData?.status || listing?.status}
+                                className="dark:bg-gray-800 dark:text-gray-100"
+                            />
+                            <InputFieldError state={state} field="maxGroupSize" />
+                        </Field>)}
+
                         {/* City */}
                         <Field>
                             <FieldLabel htmlFor="city" className="dark:text-gray-200">City</FieldLabel>

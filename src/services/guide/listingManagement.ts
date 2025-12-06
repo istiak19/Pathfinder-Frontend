@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { ListingStatus } from "@/app/(dashboardLayout)/_component/Guide/ListingsManagement/ListingColumns";
 import { serverFetch } from "@/lib/server-fetch";
 import { createListingZodSchema, updateListingZodSchema, zodValidator } from "@/lib/zodValidator";
 import { ICreateListingPayload, ListingCategory } from "@/types/listing.interface";
@@ -158,6 +159,32 @@ export async function getListingById(id: string) {
     }
 };
 
+export const toggleStatus = async (listingId: string, currentStatus: ListingStatus) => {
+    const newStatus =
+        currentStatus === ListingStatus.Active ? ListingStatus.Inactive : ListingStatus.Active;
+        console.log(currentStatus)
+
+    try {
+        const response = await serverFetch.patch(`/listings/status/${listingId}`, {
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || "Failed to update status");
+        }
+
+        return result;
+    } catch (error: any) {
+        console.error("Failed to update status:", error.message || error);
+        return {
+            success: false,
+            message: error.message || "Something went wrong",
+        };
+    }
+};
 
 export async function deleteListing(id: string) {
     try {

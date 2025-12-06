@@ -1,10 +1,58 @@
 "use client";
 
 import { Column } from "@/components/shared/ReusableManagementTable";
-import { StatusBadgeCell } from "@/components/shared/cell/StatusBadgeCell";
 import { Badge } from "@/components/ui/badge";
-import { IListing } from "@/types/listing.interface";
+import { IListing, } from "@/types/listing.interface";
+import { useState } from "react";
+import { toggleStatus } from "@/services/guide/listingManagement";
 
+export enum ListingStatus {
+    Active = "Active",
+    Inactive = "Inactive",
+}
+
+
+// StatusBadge component
+function StatusBadge({ listing }: { listing: IListing }) {
+    const [status, setStatus] = useState<ListingStatus>(listing.status as ListingStatus);
+    const [loading, setLoading] = useState(false);
+
+    const handleToggle = async () => {
+        const newStatus =
+            status === ListingStatus.Active ? ListingStatus.Inactive : ListingStatus.Active;
+
+        // Optimistic UI update
+        setStatus(newStatus);
+        setLoading(true);
+
+        try {
+            const result = await toggleStatus(listing.id, status);
+            if (!result.success) {
+                setStatus(status); // rollback on failure
+                console.error(result.message);
+            } else if (result.data?.status) {
+                setStatus(result.data.status as ListingStatus); // ensure sync with server
+            }
+        } catch (err) {
+            setStatus(status); // rollback on error
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <Badge
+            variant={status === ListingStatus.Active ? "default" : "destructive"}
+            className={`cursor-pointer ${loading ? "opacity-50 pointer-events-none" : ""}`}
+            onClick={handleToggle}
+        >
+            {status === ListingStatus.Active ? "Active" : "Inactive"}
+        </Badge>
+    );
+}
+
+// Table columns
 export const listingsColumns: Column<IListing>[] = [
     {
         header: "Title",
@@ -49,7 +97,7 @@ export const listingsColumns: Column<IListing>[] = [
     },
     {
         header: "Status",
-        accessor: (listing) => <StatusBadgeCell isDeleted={listing.status !== "Active"} />,
+        accessor: (listing) => <StatusBadge listing={listing} />,
         sortKey: "status",
-    }
+    },
 ];
