@@ -7,6 +7,9 @@ import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Users } from "lucide-react";
+import { CreateBookingDto } from "@/types/booking.interface";
+import { createBooking } from "@/services/booking/booking.service";
+import { toast } from "sonner";
 
 export default function BookingPage() {
     const searchParams = useSearchParams();
@@ -23,19 +26,28 @@ export default function BookingPage() {
     });
     const guests = Math.max(parseInt(guestsParam, 10) || 1, 1); // minimum 1 guest
 
-    const handleConfirmBooking = () => {
-        if (!date || !listingId) return;
+    const handleConfirmBooking = async () => {
+        if (!date || !listingId) {
+            toast.error("Invalid booking data!");
+            return;
+        }
 
-        // Example API call or console log
-        console.log({
+        const payload: CreateBookingDto = {
             listingId,
             date: date.toISOString(),
             guests,
-        });
+        };
 
-        // Redirect to checkout page
-        router.push(`/tourist/dashboard/wishlist?listingId=${listingId}`);
+        const res = await createBooking(payload);
+        if (res?.success) {
+            toast.success("Booking request submitted!");
+
+            router.push(`/tourist/dashboard/wishlist?listingId=${listingId}`);
+        } else {
+            toast.error(res?.message || "Booking failed!");
+        }
     };
+
 
     return (
         <div className="max-w-3xl mx-auto py-10 space-y-6">
@@ -68,7 +80,7 @@ export default function BookingPage() {
 
             {/* Confirm Booking Button */}
             <div className="text-center">
-                <Button size="lg" onClick={handleConfirmBooking} className="w-full">
+                <Button size="lg" onClick={handleConfirmBooking} className="w-full cursor-pointer">
                     Confirm Booking
                 </Button>
             </div>

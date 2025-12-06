@@ -172,7 +172,7 @@ const ListingContent = ({ listing }: ListingContentProps) => {
                     </div>
                     <Button
                         onClick={() => setShowScheduleModal(true)}
-                        className="flex-1"
+                        className="flex-1 cursor-pointer"
                     >
                         Book Now
                     </Button>

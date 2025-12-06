@@ -5,7 +5,11 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-export default function BookingCard({ booking }: { booking: Booking }) {
+interface BookingCardProps {
+    booking: Booking;
+}
+
+export default function BookingCard({ booking }: BookingCardProps) {
     const statusColors: Record<string, string> = {
         PENDING:
             "bg-yellow-100 text-yellow-800 border-yellow-300 dark:bg-yellow-900 dark:text-yellow-200 dark:border-yellow-700",
@@ -38,7 +42,7 @@ export default function BookingCard({ booking }: { booking: Booking }) {
                 </span>
 
                 <span className="text-gray-500 dark:text-gray-400 text-sm">
-                    {format(new Date(booking.date), "dd MMM yyyy • hh:mm a")}
+                    Departure date: {format(new Date(booking.date), "dd MMM yyyy")}
                 </span>
             </div>
 
@@ -54,21 +58,10 @@ export default function BookingCard({ booking }: { booking: Booking }) {
 
             {/* Info Row */}
             <div className="grid grid-cols-2 gap-2 text-sm text-gray-700 dark:text-gray-300 pt-2">
-                <p>
-                    <strong>City:</strong> {booking.listing.city}
-                </p>
-
-                <p>
-                    <strong>Guests:</strong> {booking.guests}
-                </p>
-
-                <p>
-                    <strong>Price:</strong> ${booking.listing.price}
-                </p>
-
-                <p>
-                    <strong>Payment:</strong> {booking.paymentStatus}
-                </p>
+                <p><strong>City:</strong> {booking.listing.city}</p>
+                <p><strong>Guests:</strong> {booking.guests}</p>
+                <p><strong>Price:</strong> ${booking.listing.price}</p>
+                <p><strong>Payment:</strong> {booking.paymentStatus}</p>
             </div>
 
             {/* Meeting Point */}
@@ -81,14 +74,15 @@ export default function BookingCard({ booking }: { booking: Booking }) {
                 <Button
                     disabled={!isPayEnabled}
                     className={cn(
-                        "w-full",
+                        "w-full cursor-pointer",
                         isPayEnabled
                             ? "bg-blue-600 hover:bg-blue-700 text-white"
                             : "bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-400 cursor-not-allowed"
                     )}
                     onClick={() => {
                         if (isPayEnabled) {
-                            console.log("Redirect to payment for booking:", booking.id);
+                            // Redirect to Checkout page with bookingId
+                            window.location.href = `/tourist/dashboard/wishlist/payments/checkout/${booking.id}`;
                         }
                     }}
                 >

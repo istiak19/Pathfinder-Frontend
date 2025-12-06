@@ -24,17 +24,17 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
 
             ]
         },
-        {
-            title: "Settings",
-            items: [
-                {
-                    title: "Change Password",
-                    href: "/change-password",
-                    icon: "Settings",
-                    roles: ["TOURIST"],
-                },
-            ],
-        },
+        // {
+        //     title: "Settings",
+        //     items: [
+        //         {
+        //             title: "Change Password",
+        //             href: "/change-password",
+        //             icon: "Settings",
+        //             roles: ["TOURIST"],
+        //         },
+        //     ],
+        // },
     ]
 }
 
@@ -69,7 +69,7 @@ export const touristNavItems: NavSection[] = [
         title: "Trips",
         items: [
             {
-                title: "Trips",
+                title: "My Bookings",
                 href: "/tourist/dashboard/trips",
                 icon: "Calendar",
                 roles: ["TOURIST"],
@@ -82,23 +82,23 @@ export const touristNavItems: NavSection[] = [
             },
         ],
     },
-    {
-        title: "Medical Records",
-        items: [
-            {
-                title: "My Prescriptions",
-                href: "/dashboard/my-prescriptions",
-                icon: "FileText",
-                roles: ["TOURIST"],
-            },
-            {
-                title: "Health Records",
-                href: "/dashboard/health-records",
-                icon: "Activity",
-                roles: ["TOURIST"],
-            },
-        ],
-    },
+    // {
+    //     title: "Medical Records",
+    //     items: [
+    //         {
+    //             title: "My Prescriptions",
+    //             href: "/dashboard/my-prescriptions",
+    //             icon: "FileText",
+    //             roles: ["TOURIST"],
+    //         },
+    //         {
+    //             title: "Health Records",
+    //             href: "/dashboard/health-records",
+    //             icon: "Activity",
+    //             roles: ["TOURIST"],
+    //         },
+    //     ],
+    // },
 
 ]
 

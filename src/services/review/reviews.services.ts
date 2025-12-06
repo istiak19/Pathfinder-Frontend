@@ -28,7 +28,7 @@ export async function getReviews(queryString?: string) {
 
 export async function createReview(data: IReviewFormData) {
     try {
-        const response = await serverFetch.post("/review", {
+        const response = await serverFetch.post("/reviews", {
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",

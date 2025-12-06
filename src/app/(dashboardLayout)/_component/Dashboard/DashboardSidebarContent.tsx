@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import logo from "../../../../../public/logo/logo2.png";
 import { DashboardSidebarContentProps } from "@/types/dashboard.interface";
 
-const DashboardSidebarContent = ({ userInfo, navItems, dashboardHome }: DashboardSidebarContentProps
+const DashboardSidebarContent = ({ userInfo, navItems }: DashboardSidebarContentProps
 ) => {
     const pathname = usePathname();
 
@@ -19,7 +19,7 @@ const DashboardSidebarContent = ({ userInfo, navItems, dashboardHome }: Dashboar
         <div className="hidden md:flex h-full w-64 flex-col border-r bg-card">
             {/* Logo/Brand */}
             <div className="flex h-16 items-center border-b px-6">
-                <Link href={dashboardHome} className="flex items-center group">
+                <Link href="/" className="flex items-center group">
                     <div className="relative w-8 h-8 overflow-hidden group-hover:scale-105 transition-transform duration-200">
                         <Image src={logo} alt="Logo" fill />
                     </div>
