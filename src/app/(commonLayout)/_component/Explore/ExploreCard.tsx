@@ -112,14 +112,14 @@ export default function ListingCard({ listing }: ListingCardProps) {
                         className="flex-1"
                         href={`/explore/tours/${listing.id}`}
                     >
-                        <Button variant="outline" className="w-full">
+                        <Button variant="outline" className="w-full cursor-pointer">
                             View Details
                         </Button>
                     </Link>
 
                     <Button
                         onClick={() => setShowScheduleModal(true)}
-                        className="flex-1"
+                        className="flex-1 cursor-pointer"
                     >
                         Book Now
                     </Button>

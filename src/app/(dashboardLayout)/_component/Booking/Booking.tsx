@@ -80,7 +80,7 @@ export default function BookingPage() {
 
             {/* Confirm Booking Button */}
             <div className="text-center">
-                <Button size="lg" onClick={handleConfirmBooking} className="w-full">
+                <Button size="lg" onClick={handleConfirmBooking} className="w-full cursor-pointer">
                     Confirm Booking
                 </Button>
             </div>

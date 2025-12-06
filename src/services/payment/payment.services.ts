@@ -2,25 +2,11 @@
 "use server";
 
 import { serverFetch } from "@/lib/server-fetch";
-import { CreateBookingDto } from "@/types/booking.interface";
+import { BookingPaymentDto } from "@/types/booking.interface";
 
-export async function getMeBooking() {
+export async function createPayment(data: BookingPaymentDto) {
     try {
-        const response = await serverFetch.get(`/bookings/me`);
-        const result = await response.json();
-        return result;
-    } catch (error: any) {
-        console.log(error);
-        return {
-            success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
-        };
-    }
-};
-
-export async function createBooking(data: CreateBookingDto) {
-    try {
-        const response = await serverFetch.post("/bookings", {
+        const response = await serverFetch.post("/payments/booking", {
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",

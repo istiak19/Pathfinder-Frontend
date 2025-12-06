@@ -57,3 +57,7 @@ export interface CreateBookingDto {
     date: string | Date;
     guests: number;
 }
+
+export interface BookingPaymentDto {
+    bookingId: string;
+}
