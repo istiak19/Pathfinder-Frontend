@@ -2,6 +2,7 @@
 "use server";
 
 import { serverFetch } from "@/lib/server-fetch";
+import { CreateBookingDto } from "@/types/booking.interface";
 import { IReviewFormData } from "@/types/review.interface";
 
 export async function getMeBooking() {
@@ -18,9 +19,9 @@ export async function getMeBooking() {
     }
 };
 
-export async function createReview(data: IReviewFormData) {
+export async function createBooking(data: CreateBookingDto) {
     try {
-        const response = await serverFetch.post("/review", {
+        const response = await serverFetch.post("/bookings", {
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",

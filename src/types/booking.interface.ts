@@ -51,3 +51,9 @@ export interface Booking {
     payment: Payment | null;
     reviews: Review[];
 }
+
+export interface CreateBookingDto {
+    listingId: string;
+    date: string | Date;
+    guests: number;
+}
