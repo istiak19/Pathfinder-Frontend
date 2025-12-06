@@ -1,7 +1,6 @@
 "use client";
 
 import { Column } from "@/components/shared/ReusableManagementTable";
-import { DateCell } from "@/components/shared/cell/DateCell";
 import { StatusBadgeCell } from "@/components/shared/cell/StatusBadgeCell";
 import { Badge } from "@/components/ui/badge";
 import { IListing } from "@/types/listing.interface";
@@ -52,15 +51,5 @@ export const listingsColumns: Column<IListing>[] = [
         header: "Status",
         accessor: (listing) => <StatusBadgeCell isDeleted={listing.status !== "Active"} />,
         sortKey: "status",
-    },
-    {
-        header: "Created",
-        accessor: (listing) => <DateCell date={listing.createdAt} />,
-        sortKey: "createdAt",
-    },
-    {
-        header: "Updated",
-        accessor: (listing) => <DateCell date={listing.updatedAt} />,
-        sortKey: "updatedAt",
-    },
+    }
 ];

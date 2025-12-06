@@ -11,24 +11,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import InputFieldError from "@/components/shared/InputFieldError";
 import { IListing } from "@/types/listing.interface";
 import { createListing, updateListing } from "@/services/guide/listingManagement";
+import { UserInfo } from "@/types/user.interface";
 
 interface IListingFormDialogProps {
     open: boolean;
     onClose: () => void;
     onSuccess: () => void;
     listing?: IListing;
+    user?: UserInfo
 }
 
 const categories = ["NATURE", "CULTURE", "ADVENTURE", "HISTORY", "FOOD"] as const;
 
-const ListingFormDialog = ({ open, onClose, onSuccess, listing }: IListingFormDialogProps) => {
+const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListingFormDialogProps) => {
     const formRef = useRef<HTMLFormElement>(null);
     const isEdit = !!listing;
-
     const [state, formAction, pending] = useActionState(
-    isEdit ? updateListing.bind(null, listing.id!) : createListing,
-    null
-  );
+        isEdit ? updateListing.bind(null, listing.id!) : createListing,
+        null
+    );
 
     useEffect(() => {
         if (state?.success) {
@@ -44,13 +45,16 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing }: IListingFormDi
     return (
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="max-h-[90vh] flex flex-col p-0 dark:bg-gray-900 dark:text-gray-100">
-                <DialogHeader className="px-6 pt-6 pb-4">
+
+                {/* Header */}
+                <DialogHeader className="px-6 pt-6 pb-4 shrink-0">
                     <DialogTitle className="dark:text-white">
                         {isEdit ? "Edit Listing" : "Create New Listing"}
                     </DialogTitle>
                 </DialogHeader>
 
-                <form ref={formRef} action={formAction} className="flex flex-col flex-1">
+                {/* Scrollable Form */}
+                <form ref={formRef} action={formAction} className="flex flex-col flex-1 overflow-hidden">
                     <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
                         {/* Title */}
                         <Field>
@@ -122,7 +126,7 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing }: IListingFormDi
                         {/* Category */}
                         <Field>
                             <FieldLabel htmlFor="category" className="dark:text-gray-200">Category</FieldLabel>
-                            <Input type="hidden" name="category" value={state?.formData?.category || listing?.category} />
+                            <Input type="hidden" name="category" value={state?.formData?.category || listing?.category || ""} />
                             <Select
                                 value={state?.formData?.category || listing?.category || ""}
                                 onValueChange={(value) => (formRef.current!.category.value = value)}
@@ -187,7 +191,8 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing }: IListingFormDi
                                 id="guideId"
                                 name="guideId"
                                 placeholder="043564ad-d164-4e88-94ee-54721a38b108"
-                                defaultValue={state?.formData?.guideId || listing?.guideId}
+                                readOnly
+                                defaultValue={user?.id || listing?.guideId}
                                 className="dark:bg-gray-800 dark:text-gray-100"
                             />
                             <InputFieldError state={state} field="guideId" />
@@ -195,7 +200,7 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing }: IListingFormDi
                     </div>
 
                     {/* Footer */}
-                    <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="flex justify-end gap-2 px-6 py-4 border-t shrink-0 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                         <Button type="button" variant="outline" onClick={onClose} disabled={pending} className="dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700">
                             Cancel
                         </Button>

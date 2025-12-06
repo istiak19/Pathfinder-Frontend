@@ -66,6 +66,7 @@ export interface UserInterface {
 };
 
 export interface UserInfo {
+    id?: string
     data: UserInfo;
     profilePic: string | null;
     name: string;

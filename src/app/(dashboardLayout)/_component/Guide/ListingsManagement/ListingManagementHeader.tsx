@@ -5,15 +5,13 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import ListingFormDialog from "./ListingFormDialog";
-import { IListing } from "@/types/listing.interface";
+import { UserInfo } from "@/types/user.interface";
 
 interface ListingManagementHeaderProps {
-   listing?: IListing;
+    user?: UserInfo;
 };
 
-const ListingManagementHeader = ({
-    listing,
-}: ListingManagementHeaderProps) => {
+const ListingManagementHeader = ({ user }: ListingManagementHeaderProps) => {
     const router = useRouter();
     const [, startTransition] = useTransition();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -42,7 +40,7 @@ const ListingManagementHeader = ({
                 open={isDialogOpen}
                 onClose={handleCloseDialog}
                 onSuccess={handleSuccess}
-                listing={listing}
+                user={user}
             />
 
             <ManagementPageHeader

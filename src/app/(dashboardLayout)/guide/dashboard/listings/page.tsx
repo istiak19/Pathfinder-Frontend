@@ -4,6 +4,7 @@ import ListingTable from "@/app/(dashboardLayout)/_component/Guide/ListingsManag
 import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
 import { getListings } from "@/services/guide/listingManagement";
+import { getMeUser } from "@/services/user/getMeUser";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 
@@ -15,14 +16,14 @@ const ListingManagementPage = async ({
     const searchParamsObj = await searchParams;
     const queryString = queryStringFormatter(searchParamsObj); // {searchTerm: "John", speciality: "Cardiology" => "?searchTerm=John&speciality=Cardiology"};
     const listing = await getListings(queryString);
-    console.log(listing.data, "........")
+    const user = await getMeUser();
     const totalPages = Math.ceil(
         listing?.data?.meta?.total / listing?.data?.meta?.limit
     );
 
     return (
         <div className="space-y-5">
-            <ListingManagementHeader listing={listing?.data || []} />
+            <ListingManagementHeader user={user?.data} />
             <ListingsFilters listings={listing?.data} />
             <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
                 <ListingTable listings={listing?.data} />
