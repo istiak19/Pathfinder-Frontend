@@ -4,7 +4,7 @@ import FeaturedCities from "./_component/Home/FeaturedCities";
 import TopGuides from "./_component/Home/TopGuides";
 import HowItWorks from "./_component/Home/HowItWorks";
 import Categories from "./_component/Home/Categories";
-import Testimonials from "./_component/Home/Testimonials";
+// import Testimonials from "./_component/Home/Testimonials";
 import BecomeGuideCTA from "./_component/Home/BecomeGuideCTA";
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
                 <TopGuides />
                 <HowItWorks />
                 <Categories />
-                <Testimonials />
+                {/* <Testimonials /> */}
                 <BecomeGuideCTA />
             </main>
         </>
