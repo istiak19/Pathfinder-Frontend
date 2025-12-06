@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -12,24 +12,41 @@ import InputFieldError from "@/components/shared/InputFieldError";
 import { IListing } from "@/types/listing.interface";
 import { createListing, updateListing } from "@/services/guide/listingManagement";
 import { UserInfo } from "@/types/user.interface";
+import Image from "next/image";
 
 interface IListingFormDialogProps {
     open: boolean;
     onClose: () => void;
     onSuccess: () => void;
     listing?: IListing;
-    user?: UserInfo
+    user?: UserInfo;
 }
 
 const categories = ["NATURE", "CULTURE", "ADVENTURE", "HISTORY", "FOOD"] as const;
 
 const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListingFormDialogProps) => {
     const formRef = useRef<HTMLFormElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const isEdit = !!listing;
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        setSelectedFile(file || null);
+    };
+
     const [state, formAction, pending] = useActionState(
         isEdit ? updateListing.bind(null, listing.id!) : createListing,
         null
     );
+
+    const handleClose = () => {
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        if (selectedFile) setSelectedFile(null);
+
+        formRef.current?.reset();
+        onClose();
+    };
 
     useEffect(() => {
         if (state?.success) {
@@ -38,12 +55,18 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
             onSuccess();
             onClose();
         } else if (state && !state.success) {
-            toast.error(state.message || "Something went wrong");
+            toast.error(state.message);
+
+            if (selectedFile && fileInputRef.current) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(selectedFile);
+                fileInputRef.current.files = dataTransfer.files;
+            }
         }
-    }, [state, onSuccess, onClose, isEdit]);
+    }, [state, onSuccess, onClose, selectedFile, isEdit]);
 
     return (
-        <Dialog open={open} onOpenChange={onClose}>
+        <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="max-h-[90vh] flex flex-col p-0 dark:bg-gray-900 dark:text-gray-100">
 
                 {/* Header */}
@@ -197,6 +220,45 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
                             />
                             <InputFieldError state={state} field="guideId" />
                         </Field>
+
+                        {/* Profile Photo */}
+                        {!isEdit && (
+                            <Field>
+                                <FieldLabel htmlFor="file" className="dark:text-gray-200">
+                                   Images
+                                </FieldLabel>
+
+                                {selectedFile && (
+                                    <Image
+                                        src={
+                                            typeof selectedFile === "string"
+                                                ? selectedFile
+                                                : URL.createObjectURL(selectedFile)
+                                        }
+                                        alt="Profile Photo Preview"
+                                        width={50}
+                                        height={50}
+                                        className="mb-2 rounded-full"
+                                    />
+                                )}
+
+                                <Input
+                                    ref={fileInputRef}
+                                    id="file"
+                                    name="file"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                    className="dark:bg-gray-800 dark:text-gray-100"
+                                />
+
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    Upload a images for the listing
+                                </p>
+
+                                <InputFieldError state={state} field="images" />
+                            </Field>
+                        )}
                     </div>
 
                     {/* Footer */}

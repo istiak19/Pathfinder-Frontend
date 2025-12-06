@@ -19,7 +19,7 @@ export async function createListing(_prevState: any, formData: FormData) {
         maxGroupSize: Number(formData.get("maxGroupSize")),
         city: formData.get("city") as string,
         guideId: formData.get("guideId") as string,
-        images: [],
+        images: formData.get("file") as File,
     };
 
     // Handle multiple images
