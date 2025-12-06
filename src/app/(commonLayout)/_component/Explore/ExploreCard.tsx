@@ -28,7 +28,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
     const firstImage =
         listing.images && listing.images.length > 0
             ? listing.images[0]
-            : "/placeholder.png";
+            : "/login.jpg";
 
     return (
         <>

@@ -16,6 +16,9 @@ import {
     Globe,
 } from "lucide-react";
 import { IListing } from "@/types/listing.interface";
+import BookListingDialog from "../Explore/BookListingDialog";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 interface ListingContentProps {
     listing: IListing;
@@ -23,6 +26,7 @@ interface ListingContentProps {
 
 const ListingContent = ({ listing }: ListingContentProps) => {
     const guide = listing.guide;
+    const [showScheduleModal, setShowScheduleModal] = useState(false);
 
     const initials = guide?.name
         ?.split(" ")
@@ -166,9 +170,19 @@ const ListingContent = ({ listing }: ListingContentProps) => {
                         <Users className="h-5 w-5 text-muted-foreground" />
                         <span>{listing.bookings?.length ?? 0} Bookings</span>
                     </div>
-
+                    <Button
+                        onClick={() => setShowScheduleModal(true)}
+                        className="flex-1"
+                    >
+                        Book Now
+                    </Button>
                 </CardContent>
             </Card>
+            <BookListingDialog
+                listingId={listing.id}
+                isOpen={showScheduleModal}
+                onClose={() => setShowScheduleModal(false)}
+            />
         </div>
     );
 };

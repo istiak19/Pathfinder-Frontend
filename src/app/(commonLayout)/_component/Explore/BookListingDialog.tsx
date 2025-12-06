@@ -36,13 +36,18 @@ export default function BookListingDialog({
     const [guests, setGuests] = useState<number>(1);
 
     const handleContinue = () => {
-        if (!date || !guests) return;
+        if (!date || guests < 1) return;
 
         const dateISO = date.toISOString();
-
         router.push(
-            `/listing/book?listingId=${listingId}&date=${dateISO}&guests=${guests}`
+            `/booking?listingId=${listingId}&date=${dateISO}&guests=${guests}`
         );
+    };
+
+    const handleGuestsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = Number(e.target.value);
+        if (isNaN(value) || value < 1) value = 1;
+        setGuests(Math.floor(value)); // ensures only whole numbers
     };
 
     return (
@@ -56,11 +61,9 @@ export default function BookListingDialog({
                 </DialogHeader>
 
                 <div className="space-y-6">
-
                     {/* Date Picker */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Pick a Date</label>
-
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button
@@ -92,22 +95,20 @@ export default function BookListingDialog({
                             <Input
                                 type="number"
                                 min={1}
-                                max={20}
+                                step={1}
                                 value={guests}
-                                onChange={(e) => setGuests(Number(e.target.value))}
+                                onChange={handleGuestsChange}
                                 className="w-24"
                             />
                         </div>
                     </div>
-
                 </div>
 
                 <DialogFooter>
                     <Button variant="outline" onClick={onClose}>
                         Cancel
                     </Button>
-
-                    <Button onClick={handleContinue} disabled={!date || !guests}>
+                    <Button onClick={handleContinue} disabled={!date || guests < 1}>
                         Continue
                     </Button>
                 </DialogFooter>
