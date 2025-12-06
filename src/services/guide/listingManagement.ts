@@ -6,9 +6,8 @@ import { createListingZodSchema, updateListingZodSchema, zodValidator } from "@/
 import { ICreateListingPayload, ListingCategory } from "@/types/listing.interface";
 
 export async function createListing(_prevState: any, formData: FormData) {
-    console.log(formData)
     // Validate payload first
-    const validationPayload: ICreateListingPayload = {
+    const validationPayload = {
         title: formData.get("title") as string,
         description: formData.get("description") as string,
         itinerary: formData.get("itinerary") as string,
@@ -19,33 +18,52 @@ export async function createListing(_prevState: any, formData: FormData) {
         maxGroupSize: Number(formData.get("maxGroupSize")),
         city: formData.get("city") as string,
         guideId: formData.get("guideId") as string,
-        images: formData.get("file") as File,
+        images: formData.get("files") as File,
     };
 
-    // Handle multiple images
-    const files = formData.getAll("images") as File[];
-    if (files.length > 0) {
-        validationPayload.images = files.map((file) => file.name);
-    }
-
-    // Validate with Zod
     const validatedPayload = zodValidator(validationPayload, createListingZodSchema);
-    if (!validatedPayload.success) {
+    console.log("🔥 FINAL DATA SENT TO:", validatedPayload);
+
+    if (!validatedPayload.success && validatedPayload.errors) {
+        return {
+            success: validatedPayload.success,
+            message: "Validation failed",
+            formData: validationPayload,
+            errors: validatedPayload.errors,
+        };
+    };
+
+    if (!validatedPayload.data) {
         return {
             success: false,
             message: "Validation failed",
             formData: validationPayload,
-            errors: validatedPayload.errors || {},
-        };
-    }
+        }
+    };
 
-    // Prepare FormData to send to backend
-    const backendFormData = new FormData();
-    backendFormData.append("data", JSON.stringify(validatedPayload.data));
-    files.forEach((file) => backendFormData.append("images", file)); // images as files
+    const backendPayload = {
+        title: validatedPayload.data.title,
+        description: validatedPayload.data.description,
+        itinerary: validatedPayload.data.itinerary,
+        price: validatedPayload.data.price,
+        duration: validatedPayload.data.duration,
+        category: validatedPayload.data.category,
+        meetingPoint: validatedPayload.data.meetingPoint,
+        maxGroupSize: validatedPayload.data.maxGroupSize,
+        city: validatedPayload.data.city,
+        guideId: validatedPayload.data.guideId,
+
+    };
+
+    console.log("🔥 FINAL DATA SENT TO BACKEND:", backendPayload);
+
+    const newFormData = new FormData();
+    newFormData.append("data", JSON.stringify(backendPayload));
+    newFormData.append("files", formData.get("files") as Blob);
+
 
     try {
-        const response = await serverFetch.post("/listings", { body: backendFormData });
+        const response = await serverFetch.post("/listings", { body: newFormData, });
         return await response.json();
     } catch (error: any) {
         return {

@@ -138,7 +138,7 @@ const MultiSelectFilter = ({
         return (
             <div className="flex flex-wrap gap-2">
                 {localSelection.length > 0 &&
-                    getSelectedLabels().map((label) => {
+                    getSelectedLabels()?.map((label) => {
                         const value = options.find((opt) => opt.label === label)?.value;
                         return (
                             <Badge

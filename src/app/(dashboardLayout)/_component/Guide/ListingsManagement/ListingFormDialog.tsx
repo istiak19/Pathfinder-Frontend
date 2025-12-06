@@ -28,11 +28,11 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
     const formRef = useRef<HTMLFormElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const isEdit = !!listing;
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        setSelectedFile(file || null);
+        const files = Array.from(e.target.files || []);
+        setSelectedFiles(files);
     };
 
     const [state, formAction, pending] = useActionState(
@@ -42,7 +42,7 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
 
     const handleClose = () => {
         if (fileInputRef.current) fileInputRef.current.value = "";
-        if (selectedFile) setSelectedFile(null);
+        if (selectedFiles) setSelectedFiles([]);
 
         formRef.current?.reset();
         onClose();
@@ -57,13 +57,15 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
         } else if (state && !state.success) {
             toast.error(state.message);
 
-            if (selectedFile && fileInputRef.current) {
+            if (selectedFiles.length > 0 && fileInputRef.current) {
                 const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(selectedFile);
+                selectedFiles.forEach((file) => {
+                    dataTransfer.items.add(file);
+                });
                 fileInputRef.current.files = dataTransfer.files;
             }
         }
-    }, [state, onSuccess, onClose, selectedFile, isEdit]);
+    }, [state, onSuccess, onClose, selectedFiles, isEdit]);
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>
@@ -224,36 +226,38 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
                         {/* Profile Photo */}
                         {!isEdit && (
                             <Field>
-                                <FieldLabel htmlFor="file" className="dark:text-gray-200">
-                                   Images
+                                <FieldLabel htmlFor="files" className="dark:text-gray-200">
+                                    Images
                                 </FieldLabel>
 
-                                {selectedFile && (
-                                    <Image
-                                        src={
-                                            typeof selectedFile === "string"
-                                                ? selectedFile
-                                                : URL.createObjectURL(selectedFile)
-                                        }
-                                        alt="Profile Photo Preview"
-                                        width={50}
-                                        height={50}
-                                        className="mb-2 rounded-full"
-                                    />
+                                {selectedFiles.length > 0 && (
+                                    <div className="flex gap-2 flex-wrap mb-2">
+                                        {selectedFiles.map((file, index) => (
+                                            <Image
+                                                key={index}
+                                                src={URL.createObjectURL(file)}
+                                                alt="Preview"
+                                                width={60}
+                                                height={60}
+                                                className="rounded-md object-cover"
+                                            />
+                                        ))}
+                                    </div>
                                 )}
 
                                 <Input
                                     ref={fileInputRef}
-                                    id="file"
-                                    name="file"
+                                    id="files"
+                                    name="files"
                                     type="file"
                                     accept="image/*"
+                                    multiple
                                     onChange={handleFileChange}
                                     className="dark:bg-gray-800 dark:text-gray-100"
                                 />
 
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    Upload a images for the listing
+                                    Upload multiple images for the listing
                                 </p>
 
                                 <InputFieldError state={state} field="images" />

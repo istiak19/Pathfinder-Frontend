@@ -35,7 +35,7 @@ const ListingsFilters = ({ listings }: any) => {
                 {/* Specialties Multi-Select */}
                 <MultiSelectFilter
                     paramName="listings"
-                    options={listings.map((listing: any) => ({
+                    options={listings?.map((listing: any) => ({
                         value: listing.title,
                         label: listing.title,
                     }))}
@@ -69,7 +69,7 @@ const ListingsFilters = ({ listings }: any) => {
             {/* Row 3: Active Filter Badges - Fixed height to prevent shift */}
             <MultiSelectFilter
                 paramName="listings"
-                options={listings.map((listing: any) => ({
+                options={listings?.map((listing: any) => ({
                     value: listing.title,
                     label: listing.title,
                 }))}

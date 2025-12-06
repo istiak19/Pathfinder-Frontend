@@ -87,7 +87,7 @@ export interface ICreateListingPayload {
     meetingPoint: string;
     maxGroupSize: number;
     city: string;
-    images?: File | string[]; // Optional array of image URLs or filenames
+    images?: File[] | string[]; // Optional array of image URLs or filenames
     guideId: string;
     status?: string; // Optional: e.g., "PUBLISHED" | "DRAFT"
 }
