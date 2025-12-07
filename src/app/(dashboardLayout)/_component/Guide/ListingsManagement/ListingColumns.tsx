@@ -4,7 +4,7 @@ import { Column } from "@/components/shared/ReusableManagementTable";
 import { Badge } from "@/components/ui/badge";
 import { IListing, } from "@/types/listing.interface";
 import { useState } from "react";
-import { toggleStatus } from "@/services/guide/listingManagement";
+import { toggleStatus } from "@/services/listings/listingManagement";
 import { toast } from "sonner";
 
 export enum ListingStatus {

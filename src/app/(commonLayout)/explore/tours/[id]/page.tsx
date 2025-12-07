@@ -1,6 +1,6 @@
 import ListingContent from "@/app/(commonLayout)/_component/ListingDetails/ListingContent";
 import ListingReviews from "@/app/(commonLayout)/_component/ListingDetails/ListingReview";
-import { getListingById } from "@/services/guide/listingManagement";
+import { getListingById } from "@/services/listings/listingManagement";
 
 const ListingDetailsPage = async ({
     params,

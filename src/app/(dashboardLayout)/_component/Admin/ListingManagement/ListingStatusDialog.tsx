@@ -19,7 +19,7 @@ import {
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { IListing } from "@/types/listing.interface";
-import { toggleStatus } from "@/services/guide/listingManagement";
+import { toggleStatus } from "@/services/listings/listingManagement";
 import { ListingStatus } from "../../Guide/ListingsManagement/ListingColumns";
 
 interface IListingStatusDialogProps {

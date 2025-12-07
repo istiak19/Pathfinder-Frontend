@@ -6,7 +6,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import ReusableManagementTable from "@/components/shared/ReusableManagementTable";
 import { IListing } from "@/types/listing.interface";
-import { deleteListing } from "@/services/guide/listingManagement";
+import { deleteListing } from "@/services/listings/listingManagement";
 import ListingFormDialog from "./ListingFormDialog";
 import ListingViewDetailDialog from "./ListingViewDetailDialog";
 import { listingsColumns } from "./ListingColumns";

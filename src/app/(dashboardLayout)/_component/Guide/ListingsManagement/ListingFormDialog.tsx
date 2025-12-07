@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import InputFieldError from "@/components/shared/InputFieldError";
 import { IListing } from "@/types/listing.interface";
-import { createListing, updateListing } from "@/services/guide/listingManagement";
+import { createListing, updateListing } from "@/services/listings/listingManagement";
 import { UserInfo } from "@/types/user.interface";
 import Image from "next/image";
 

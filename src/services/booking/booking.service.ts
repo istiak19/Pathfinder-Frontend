@@ -18,6 +18,20 @@ export async function getMeBooking() {
     }
 };
 
+export async function getAllBookings(queryString?: string) {
+    try {
+        const response = await serverFetch.get(`/bookings/${queryString ? `?${queryString}` : ""}`);
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+};
+
 export async function createBooking(data: CreateBookingDto) {
     try {
         const response = await serverFetch.post("/bookings", {
@@ -60,6 +74,21 @@ export const updateBooking = async (bookingId: string, newStatus: string) => {
         return {
             success: false,
             message: error.message || "Something went wrong",
+        };
+    }
+};
+
+export async function deleteBooking(id: string) {
+    try {
+        const response = await serverFetch.delete(`/bookings/${id}`)
+        const result = await response.json();
+
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
         };
     }
 };
