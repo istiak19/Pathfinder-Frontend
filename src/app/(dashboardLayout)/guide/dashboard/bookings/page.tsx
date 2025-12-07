@@ -1,4 +1,6 @@
+import GuideBookingFilter from "@/app/(dashboardLayout)/_component/Guide/guideBookingManagemnt/GuideBookingFilter";
 import GuideBookingTable from "@/app/(dashboardLayout)/_component/Guide/guideBookingManagemnt/GuideBookingTable";
+import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
 import { getGuideBookings } from "@/services/guide/listingManagement";
@@ -16,11 +18,14 @@ const BookingPage = async ({
     const totalPages = Math.ceil(
         guideBookings?.meta?.total / guideBookings?.meta?.limit
     );
-    
+
     return (
         <div className="space-y-5">
-            {/* <ListingManagementHeader user={user?.data} /> */}
-            {/* <ListingsFilters /> */}
+            <ManagementPageHeader
+                title="Bookings Management"
+                description="Manage guide booking information and details"
+            />
+            <GuideBookingFilter />
             <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
                 <GuideBookingTable bookings={guideBookings?.data} />
                 <TablePagination

@@ -104,10 +104,14 @@ const StatusFormDialog = ({ open, onClose, onSuccess, booking }: IStatusFormDial
                     </div>
 
                     <div className="flex justify-end gap-2 px-6 py-4 border-t shrink-0 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                        <Button type="button" variant="outline" onClick={onClose} disabled={pending}>
+                        <Button type="button"
+                            className="cursor-pointer"
+                            variant="outline" onClick={onClose} disabled={pending}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={pending || allowedStatuses.length === 0}>
+                        <Button type="submit"
+                            className="cursor-pointer"
+                            disabled={pending || allowedStatuses.length === 0}>
                             {pending ? "Saving..." : "Update Status"}
                         </Button>
                     </div>

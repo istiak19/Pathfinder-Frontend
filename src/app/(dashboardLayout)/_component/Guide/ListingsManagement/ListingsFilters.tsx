@@ -20,6 +20,7 @@ const ListingsFilters = () => {
         { label: "History", value: "HISTORY" },
         { label: "Entertainment", value: "ENTERTAINMENT" }
     ];
+    
     return (
         <div className="space-y-3">
             {/* Row 1: Search and Refresh */}

@@ -88,7 +88,7 @@ const ClearFiltersButton = ({
     onAfterClear,
     variant = "ghost",
     size = "default",
-    className = "h-10 px-3",
+    className = "h-10 px-3 cursor-pointer",
     label = "Clear",
     showCount = true,
 }: ClearFiltersButtonProps) => {
