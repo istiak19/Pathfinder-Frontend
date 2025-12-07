@@ -76,9 +76,11 @@ export interface UserInfo {
     role: "ADMIN" | "GUIDE" | "TOURIST";
     expertise?: string[];
     dailyRate?: number | null;
-
+    status: string;
     // Tourist-only fields
     travelPreferences?: string[];
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface UserProfile {

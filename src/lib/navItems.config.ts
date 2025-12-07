@@ -112,41 +112,23 @@ export const adminNavItems: NavSection[] = [
                 icon: "Shield",
                 roles: ["ADMIN"],
             },
-            {
-                title: "Manage users",
-                href: "/admin/dashboard/listings",
-                icon: "Stethoscope",
-                roles: ["ADMIN"],
-            },
-            {
-                title: "Manage all bookings",
-                href: "/admin/dashboard/bookings",
-                icon: "Users",
-                roles: ["ADMIN"],
-            },
         ],
     },
     {
-        title: "Hospital Management",
+        title: "Listings Management",
         items: [
             {
-                title: "Appointments",
-                href: "/admin/dashboard/appointments-management",
+                title: "Manage All Bookings",
+                href: "/admin/dashboard/bookings",
                 icon: "Calendar",
                 roles: ["ADMIN"],
             },
             {
-                title: "Schedules",
-                href: "/admin/dashboard/schedules-management",
-                icon: "Clock",
+                title: "Manage Listings",
+                href: "/admin/dashboard/listings",
+                icon: "Tour",
                 roles: ["ADMIN"],
-            },
-            {
-                title: "Specialties",
-                href: "/admin/dashboard/specialties-management",
-                icon: "Hospital",
-                roles: ["ADMIN"],
-            },
+            }
         ],
     }
 ]
