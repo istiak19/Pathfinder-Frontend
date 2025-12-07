@@ -4,7 +4,6 @@
 import { serverFetch } from "@/lib/server-fetch";
 
 export const updateUserStatus = async (userId: string, newStatus: string) => {
-    
     try {
         const response = await serverFetch.patch(`/users/status/${userId}`, {
             headers: { "Content-Type": "application/json" },

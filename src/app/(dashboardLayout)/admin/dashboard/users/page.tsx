@@ -1,4 +1,4 @@
-import UsersTable from "@/app/(dashboardLayout)/_component/Admin/UserManagemnt/UserTable";
+import UsersTable from "@/app/(dashboardLayout)/_component/Admin/UserManagement/UserTable";
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
