@@ -16,7 +16,7 @@ export default async function MyBookings() {
             </div>
             <TablePagination
                 currentPage={bookings?.meta?.page || 1}
-                totalPages={bookings?.meta?.totalPage || 1}
+                totalPages={bookings?.meta?.totalPages || 1}
             />
         </div>
     );

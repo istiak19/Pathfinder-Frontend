@@ -18,7 +18,7 @@ const ListingManagementPage = async ({
     const listing = await getListings(queryString);
     const user = await getMeUser();
     const totalPages = Math.ceil(
-        listing?.data?.meta?.total / listing?.data?.meta?.limit
+        listing?.meta?.total / listing?.meta?.limit
     );
 
     return (
@@ -28,7 +28,7 @@ const ListingManagementPage = async ({
             <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
                 <ListingTable listings={listing?.data} />
                 <TablePagination
-                    currentPage={listing?.data?.meta?.page || 1}
+                    currentPage={listing?.meta?.page || 1}
                     totalPages={totalPages || 1}
                 />
             </Suspense>

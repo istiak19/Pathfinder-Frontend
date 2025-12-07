@@ -1,10 +1,10 @@
-// import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 import ListingGrid from "../_component/Explore/ExploreGrid";
 import { getListings } from "@/services/guide/listingManagement";
 import TablePagination from "@/components/shared/TablePagination";
+import ListingsFilters from "@/app/(dashboardLayout)/_component/Guide/ListingsManagement/ListingsFilters";
 
 // ISR: Revalidate every 10 minutes for listings
 export const revalidate = 600;
@@ -18,7 +18,6 @@ const ExplorePage = async ({
     const queryString = queryStringFormatter(searchParamsObj);
 
     const listings = await getListings(queryString);
-    console.log(listings)
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -33,7 +32,7 @@ const ExplorePage = async ({
                 </div>
 
                 {/* Filters */}
-                {/* <DoctorSearchFilters specialties={specialties} /> */}
+                <ListingsFilters />
 
                 {/* listings Grid */}
                 <Suspense fallback={<TableSkeleton columns={3} />}>
@@ -42,7 +41,7 @@ const ExplorePage = async ({
 
                 <TablePagination
                     currentPage={listings?.meta?.page || 1}
-                    totalPages={listings?.meta?.totalPage || 1}
+                    totalPages={listings?.meta?.totalPages || 1}
                 />
             </div>
         </div>

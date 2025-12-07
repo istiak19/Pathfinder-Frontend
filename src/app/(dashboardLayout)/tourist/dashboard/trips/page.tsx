@@ -26,7 +26,7 @@ const TripsPage = async () => {
 
             <TablePagination
                 currentPage={filteredBookings?.meta?.page || 1}
-                totalPages={filteredBookings?.meta?.totalPage || 1}
+                totalPages={filteredBookings?.meta?.totalPages || 1}
             />
         </div>
     );

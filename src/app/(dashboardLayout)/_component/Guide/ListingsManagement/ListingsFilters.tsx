@@ -5,21 +5,6 @@ import ClearFiltersButton from "@/components/shared/ClearFiltersButton";
 import MultiSelectFilter from "@/components/shared/MultiSelectFilter";
 import RefreshButton from "@/components/shared/RefreshButton";
 import SearchFilter from "@/components/shared/SearchFilter";
-// import SelectFilter from "@/components/shared/SelectFilter";
-
-
-// export const listing = [
-//     { label: "FOOD", value: "FOOD" },
-//     { label: "ARt", value: "ART" },
-//     { label: "ADVENTURE", value: "ADVENTURE" },
-//     { label: "NATURE", value: "NATURE" },
-//     { label: "CULTURE", value: "CULTURE" },
-//     { label: "SHOPPING", value: "SHOPPING" },
-//     { label: "SPORTS", value: "SPORTS" },
-//     { label: "WELLNESS", value: "WELLNESS" },
-//     { label: "HISTORY", value: "HISTORY" },
-//     { label: "ENTERTAINMENT", value: "ENTERTAINMENT" }
-// ];
 
 
 const ListingsFilters = () => {
@@ -71,10 +56,16 @@ const ListingsFilters = () => {
                 <SearchFilter paramName="city" placeholder="Search by city (e.g. Dhaka)" />
 
                 {/* language Filter */}
-                <SearchFilter paramName="language" placeholder="Search by language (e.g. Bangla)" />
+                {/* <SearchFilter
+                    paramName="language"
+                    placeholder="Search by language (e.g. Bangla)"
+                /> */}
 
                 {/* Category Filter */}
-                <SearchFilter paramName="priceMin" placeholder="Minimum price (e.g. 500)" />
+                <SearchFilter
+                    paramName="priceRange"
+                    placeholder="Price range (e.g. 100-500, 100-, -500)"
+                />
 
                 {/* Clear All Filters */}
                 <ClearFiltersButton />
