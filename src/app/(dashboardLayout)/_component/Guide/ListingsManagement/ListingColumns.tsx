@@ -28,13 +28,12 @@ function StatusBadge({ listing }: { listing: IListing }) {
         try {
             const result = await toggleStatus(listing.id, status);
             if (!result.success) {
-                setStatus(status); // rollback on failure
-                console.error(result.message);
+                setStatus(status);
             } else if (result.data?.status) {
-                setStatus(result.data.status as ListingStatus); // ensure sync with server
+                setStatus(result.data.status as ListingStatus); 
             }
         } catch (err) {
-            setStatus(status); // rollback on error
+            setStatus(status);
             console.error(err);
         } finally {
             setLoading(false);
