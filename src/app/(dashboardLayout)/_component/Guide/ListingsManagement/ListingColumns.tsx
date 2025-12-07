@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { IListing, } from "@/types/listing.interface";
 import { useState } from "react";
 import { toggleStatus } from "@/services/guide/listingManagement";
+import { toast } from "sonner";
 
 export enum ListingStatus {
     Active = "Active",
@@ -18,23 +19,21 @@ function StatusBadge({ listing }: { listing: IListing }) {
     const [loading, setLoading] = useState(false);
 
     const handleToggle = async () => {
-        const newStatus =
-            status === ListingStatus.Active ? ListingStatus.Inactive : ListingStatus.Active;
-
-        // Optimistic UI update
-        setStatus(newStatus);
+        const newStatus = status === ListingStatus.Active ? ListingStatus.Inactive : ListingStatus.Active;
         setLoading(true);
 
         try {
-            const result = await toggleStatus(listing.id, status);
-            if (!result.success) {
-                setStatus(status);
-            } else if (result.data?.status) {
-                setStatus(result.data.status as ListingStatus); 
+            const res = await toggleStatus(listing.id!, newStatus);
+
+            if (res.success) {
+                toast.success(res.message || "Listing status updated");
+            } else {
+                toast.error(res.message || "Failed to update listing status");
             }
         } catch (err) {
             setStatus(status);
-            console.error(err);
+            console.error("Error updating listing:", err);
+            toast.error("Failed to update listing status");
         } finally {
             setLoading(false);
         }
@@ -42,11 +41,11 @@ function StatusBadge({ listing }: { listing: IListing }) {
 
     return (
         <Badge
-            variant={status === ListingStatus.Active ? "default" : "destructive"}
+            variant={listing?.status === ListingStatus.Active ? "default" : "destructive"}
             className={`cursor-pointer ${loading ? "opacity-50 pointer-events-none" : ""}`}
             onClick={handleToggle}
         >
-            {status === ListingStatus.Active ? "Active" : "Inactive"}
+            {listing?.status}
         </Badge>
     );
 }

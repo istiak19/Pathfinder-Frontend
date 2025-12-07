@@ -181,7 +181,6 @@ export async function getListingById(id: string) {
 };
 
 export const toggleStatus = async (listingId: string, currentStatus: ListingStatus) => {
-    // const newStatus = currentStatus === ListingStatus.Active ? ListingStatus.Inactive : ListingStatus.Active;
     try {
         const response = await serverFetch.patch(`/listings/status/${listingId}`, {
             headers: { "Content-Type": "application/json" },
