@@ -4,6 +4,7 @@
 import { serverFetch } from "@/lib/server-fetch";
 import { createListingZodSchema, updateListingZodSchema, zodValidator } from "@/lib/zodValidator";
 import { ICreateListingPayload, ListingCategory } from "@/types/listing.interface";
+import { revalidateTag } from "next/cache";
 
 export enum ListingStatus {
     Active = "Active",
@@ -137,7 +138,9 @@ export async function updateListing(id: string, _prevState: any, formData: FormD
 
 export async function getListings(queryString?: string) {
     try {
-        const response = await serverFetch.get(`/listings${queryString ? `?${queryString}` : ""}`);
+        const response = await serverFetch.get(`/listings${queryString ? `?${queryString}` : ""}`, {
+            next: { tags: ["listings"] }
+        });
         const result = await response.json();
         return result;
     } catch (error: any) {
@@ -178,12 +181,10 @@ export async function getListingById(id: string) {
 };
 
 export const toggleStatus = async (listingId: string, currentStatus: ListingStatus) => {
-    const newStatus = currentStatus === ListingStatus.Active ? ListingStatus.Inactive : ListingStatus.Active;
-
     try {
         const response = await serverFetch.patch(`/listings/status/${listingId}`, {
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status: newStatus }),
+            body: JSON.stringify({ status: currentStatus }),
         });
 
         const result = await response.json();
@@ -191,7 +192,7 @@ export const toggleStatus = async (listingId: string, currentStatus: ListingStat
         if (!result.success) {
             throw new Error(result.message || "Failed to update status");
         }
-
+        revalidateTag("listings", { expire: 0 });
         return result;
     } catch (error: any) {
         console.error("Failed to update status:", error.message || error);

@@ -1,4 +1,5 @@
-import UsersTable from "@/app/(dashboardLayout)/_component/Admin/UserManagemnt/UserTable";
+import UsersFilter from "@/app/(dashboardLayout)/_component/Admin/UserManagement/UserFilter";
+import UsersTable from "@/app/(dashboardLayout)/_component/Admin/UserManagement/UserTable";
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
@@ -13,13 +14,12 @@ const AdminUserManagementPage = async ({
 }) => {
     const searchParamsObj = await searchParams;
     const queryString = queryStringFormatter(searchParamsObj);
-    const users = await getAllUser();
+    const users = await getAllUser(queryString);
+    
 
     const totalPages = Math.ceil(
         (users?.meta?.total || 1) / (users?.meta?.limit || 1)
     );
-
-    console.log(queryString)
 
     return (
         <div className="space-y-6">
@@ -29,7 +29,7 @@ const AdminUserManagementPage = async ({
             />
 
             {/* Search, Filters */}
-            {/* <PatientsFilter /> */}
+            <UsersFilter />
 
             <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
                 <UsersTable users={users?.data || []} />

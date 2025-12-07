@@ -2,9 +2,9 @@
 "use server";
 
 import { serverFetch } from "@/lib/server-fetch";
+import { revalidateTag } from "next/cache";
 
 export const updateUserStatus = async (userId: string, newStatus: string) => {
-    
     try {
         const response = await serverFetch.patch(`/users/status/${userId}`, {
             headers: { "Content-Type": "application/json" },
@@ -16,7 +16,7 @@ export const updateUserStatus = async (userId: string, newStatus: string) => {
         if (!result.success) {
             throw new Error(result.message || "Failed to update status");
         }
-
+        revalidateTag("user-info", { expire: 0 });
         return result;
     } catch (error: any) {
         console.error("Failed to update status:", error.message || error);
