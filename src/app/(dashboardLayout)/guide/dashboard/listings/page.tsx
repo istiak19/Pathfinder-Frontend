@@ -7,6 +7,23 @@ import { getListings } from "@/services/guide/listingManagement";
 import { getMeUser } from "@/services/user/getMeUser";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "All Listings – Pathfinder",
+    description:
+        "Browse all available tours and experiences with local guides on Pathfinder. Discover destinations, explore categories, and book your next adventure.",
+    keywords: [
+        "Pathfinder",
+        "all listings",
+        "tour listings",
+        "travel experiences",
+        "local guides",
+        "tourism platform",
+        "book tours",
+        "adventure trips",
+    ],
+};
 
 const ListingManagementPage = async ({
     searchParams,

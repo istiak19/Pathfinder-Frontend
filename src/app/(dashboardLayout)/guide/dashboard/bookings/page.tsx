@@ -6,6 +6,23 @@ import TableSkeleton from "@/components/shared/TableSkeleton";
 import { getGuideBookings } from "@/services/guide/listingManagement";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Guide Bookings – Pathfinder",
+    description:
+        "Manage all your bookings as a local guide on Pathfinder. Track booking statuses, view tourist information, and stay updated on your tours and reservations.",
+    keywords: [
+        "Pathfinder",
+        "guide bookings",
+        "local guide dashboard",
+        "bookings management",
+        "tour management",
+        "tourist information",
+        "travel analytics",
+        "tour reservations",
+    ],
+};
 
 const BookingPage = async ({
     searchParams,
