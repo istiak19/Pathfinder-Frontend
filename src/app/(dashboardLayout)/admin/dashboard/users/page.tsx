@@ -5,7 +5,24 @@ import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
 import { getAllUser } from "@/services/user/userAllGet";
 import { queryStringFormatter } from "@/utility/formatters";
+import { Metadata } from "next";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+    title: "All Users – Pathfinder",
+    description:
+        "Browse all available tours and experiences with local guides on Pathfinder. Discover destinations, explore categories, and book your next adventure.",
+    keywords: [
+        "Pathfinder",
+        "all listings",
+        "tour listings",
+        "travel experiences",
+        "local guides",
+        "tourism platform",
+        "book tours",
+        "adventure trips",
+    ],
+};
 
 const AdminUserManagementPage = async ({
     searchParams,
