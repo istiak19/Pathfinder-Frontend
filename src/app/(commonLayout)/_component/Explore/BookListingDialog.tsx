@@ -105,10 +105,14 @@ export default function BookListingDialog({
                 </div>
 
                 <DialogFooter>
-                    <Button variant="outline" onClick={onClose}>
+                    <Button variant="outline"
+                        className="cursor-pointer"
+                        onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button onClick={handleContinue} disabled={!date || guests < 1}>
+                    <Button onClick={handleContinue}
+                        className="cursor-pointer"
+                        disabled={!date || guests < 1}>
                         Continue
                     </Button>
                 </DialogFooter>

@@ -4,6 +4,7 @@ import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 import ListingGrid from "../_component/Explore/ExploreGrid";
 import { getListings } from "@/services/guide/listingManagement";
+import TablePagination from "@/components/shared/TablePagination";
 
 // ISR: Revalidate every 10 minutes for listings
 export const revalidate = 600;
@@ -17,6 +18,7 @@ const ExplorePage = async ({
     const queryString = queryStringFormatter(searchParamsObj);
 
     const listings = await getListings(queryString);
+    console.log(listings)
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -38,11 +40,10 @@ const ExplorePage = async ({
                     <ListingGrid listings={listings.data || []} />
                 </Suspense>
 
-                {/* Pagination */}
-                {/* <TablePagination
-                    currentPage={doctorsResponse?.data?.meta?.page || 1}
-                    totalPages={doctorsResponse?.data?.meta?.totalPage || 1}
-                /> */}
+                <TablePagination
+                    currentPage={listings?.meta?.page || 1}
+                    totalPages={listings?.meta?.totalPage || 1}
+                />
             </div>
         </div>
     );
