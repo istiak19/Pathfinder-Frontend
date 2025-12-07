@@ -1,9 +1,9 @@
-import GuideBookingFilter from "@/app/(dashboardLayout)/_component/Guide/guideBookingManagemnt/GuideBookingFilter";
-import GuideBookingTable from "@/app/(dashboardLayout)/_component/Guide/guideBookingManagemnt/GuideBookingTable";
+import GuideBookingFilter from "@/app/(dashboardLayout)/_component/Guide/guideBookingManagement/GuideBookingFilter";
+import GuideBookingTable from "@/app/(dashboardLayout)/_component/Guide/guideBookingManagement/GuideBookingTable";
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
-import { getGuideBookings } from "@/services/guide/listingManagement";
+import { getGuideBookings } from "@/services/listings/listingManagement";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 import { Metadata } from "next";

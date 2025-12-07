@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { IListing } from "@/types/listing.interface";
 import { listingsColumns } from "./ListingsColumns";
 import ListingViewDetailDialog from "./ListingViewDetailDialog";
-import { deleteListing } from "@/services/guide/listingManagement";
+import { deleteListing } from "@/services/listings/listingManagement";
 import ListingStatusDialog from "./ListingStatusDialog";
 
 interface ListingsTableProps {

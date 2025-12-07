@@ -2,7 +2,7 @@ import TableSkeleton from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 import ListingGrid from "../_component/Explore/ExploreGrid";
-import { getListings } from "@/services/guide/listingManagement";
+import { getListings } from "@/services/listings/listingManagement";
 import TablePagination from "@/components/shared/TablePagination";
 import ListingsFilters from "@/app/(dashboardLayout)/_component/Guide/ListingsManagement/ListingsFilters";
 

@@ -3,7 +3,7 @@ import ListingsFilters from "@/app/(dashboardLayout)/_component/Guide/ListingsMa
 import ListingTable from "@/app/(dashboardLayout)/_component/Guide/ListingsManagement/ListingTable";
 import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
-import { getListings } from "@/services/guide/listingManagement";
+import { getListings } from "@/services/listings/listingManagement";
 import { getMeUser } from "@/services/user/getMeUser";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
