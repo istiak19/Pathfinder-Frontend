@@ -32,10 +32,10 @@ export default function ListingReviews({ listingId }: ListingReviewsProps) {
         const loadReviews = async () => {
             try {
                 setLoading(true);
-                const response = await getReviews(`?listingId=${listingId}&limit=20`);
+                const response = await getReviews(`?listingId=${listingId}&limit=10`);
 
-                if (response.success && response.data.data) {
-                    const data = response.data.data;
+                if (response.success && response?.data?.data) {
+                    const data = response?.data?.data;
                     setReviews(data);
 
                     if (data.length > 0) {
@@ -68,14 +68,22 @@ export default function ListingReviews({ listingId }: ListingReviewsProps) {
 
     if (loading) {
         return (
-            <Card>
-                <CardHeader>
-                    <CardTitle>Reviews</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-muted-foreground">Loading reviews...</p>
-                </CardContent>
-            </Card>
+            <div>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Reviews</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="w-full h-4 bg-muted relative overflow-hidden rounded">
+                            <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent animate-[shimmer_1.5s_infinite]" />
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <style>
+                    {` @keyframes shimmer { 0% { transform: translateX(-100%); }100% { transform: translateX(100%); }}`}
+                </style>
+            </div>
         );
     }
 
@@ -102,13 +110,13 @@ export default function ListingReviews({ listingId }: ListingReviewsProps) {
             </CardHeader>
 
             <CardContent>
-                {reviews.length === 0 ? (
+                {reviews?.length === 0 ? (
                     <p className="text-muted-foreground text-center py-8">
                         No reviews yet. Be the first to leave a review!
                     </p>
                 ) : (
                     <div className="space-y-4">
-                        {reviews.map((review) => (
+                        {reviews?.map((review) => (
                             <div
                                 key={review.id}
                                 className="border-b last:border-0 pb-4 last:pb-0"

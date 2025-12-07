@@ -47,7 +47,7 @@ export default function BookListingDialog({
     const handleGuestsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = Number(e.target.value);
         if (isNaN(value) || value < 1) value = 1;
-        setGuests(Math.floor(value)); // ensures only whole numbers
+        setGuests(Math.floor(value));
     };
 
     return (

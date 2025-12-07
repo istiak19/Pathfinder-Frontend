@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import ListingGrid from "../_component/Explore/ExploreGrid";
 import { getListings } from "@/services/guide/listingManagement";
 
-// ISR: Revalidate every 10 minutes for doctor listings
+// ISR: Revalidate every 10 minutes for listings
 export const revalidate = 600;
 
 const ExplorePage = async ({
@@ -16,7 +16,6 @@ const ExplorePage = async ({
     const searchParamsObj = await searchParams;
     const queryString = queryStringFormatter(searchParamsObj);
 
-    // Fetch doctors and specialties in parallel
     const listings = await getListings(queryString);
 
     return (
@@ -34,7 +33,7 @@ const ExplorePage = async ({
                 {/* Filters */}
                 {/* <DoctorSearchFilters specialties={specialties} /> */}
 
-                {/* Doctor Grid */}
+                {/* listings Grid */}
                 <Suspense fallback={<TableSkeleton columns={3} />}>
                     <ListingGrid listings={listings.data || []} />
                 </Suspense>
