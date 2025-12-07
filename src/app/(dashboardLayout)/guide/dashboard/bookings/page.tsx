@@ -1,7 +1,33 @@
-const BookingPage = () => {
+import GuideBookingTable from "@/app/(dashboardLayout)/_component/Guide/guideBookingManagemnt/GuideBookingTable";
+import TablePagination from "@/components/shared/TablePagination";
+import TableSkeleton from "@/components/shared/TableSkeleton";
+import { getGuideBookings } from "@/services/guide/listingManagement";
+import { queryStringFormatter } from "@/utility/formatters";
+import { Suspense } from "react";
+
+const BookingPage = async ({
+    searchParams,
+}: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
+    const searchParamsObj = await searchParams;
+    const queryString = queryStringFormatter(searchParamsObj);
+    const guideBookings = await getGuideBookings(queryString);
+    const totalPages = Math.ceil(
+        guideBookings?.meta?.total / guideBookings?.meta?.limit
+    );
+    console.log(guideBookings)
     return (
-        <div>
-            Bookings from travelers
+        <div className="space-y-5">
+            {/* <ListingManagementHeader user={user?.data} /> */}
+            {/* <ListingsFilters /> */}
+            <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
+                <GuideBookingTable bookings={guideBookings?.data} />
+                <TablePagination
+                    currentPage={guideBookings?.meta?.page || 1}
+                    totalPages={totalPages || 1}
+                />
+            </Suspense>
         </div>
     );
 };

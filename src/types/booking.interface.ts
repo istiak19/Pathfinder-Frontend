@@ -1,5 +1,42 @@
 import { IListing } from "./listing.interface";
 
+export interface IBooking {
+    id: string;
+    date: string; // ISO date string
+    status: BookingStatus;
+    guests: number;
+    listingId: string;
+    touristId: string;
+    paymentStatus: "PAID" | "UNPAID";
+    createdAt: string;
+    updatedAt: string;
+    listing: IListing;
+    tourist: ITourist;
+    payment: Payment;
+    reviews: Review[];
+}
+
+export interface ITourist {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    role: "TOURIST" | string;
+    profilePic: string;
+    bio: string;
+    isVerified: boolean;
+    status: string;
+    languages: string[];
+    expertise: string[];
+    dailyRate: number | null;
+    travelPreferences: string[];
+    authProvider: string | null;
+    providerId: string | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+
 export enum PaymentStatus {
     UNPAID = "UNPAID",
     PAID = "PAID",

@@ -149,6 +149,20 @@ export async function getListings(queryString?: string) {
     }
 };
 
+export async function getGuideBookings(queryString?: string) {
+    try {
+        const response = await serverFetch.get(`/bookings/guide/my${queryString ? `?${queryString}` : ""}`);
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+};
+
 export async function getListingById(id: string) {
     try {
         const response = await serverFetch.get(`/listings/${id}`)
