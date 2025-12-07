@@ -48,12 +48,12 @@ export const guideNavItems: NavSection[] = [
                 icon: "Calendar",
                 roles: ["GUIDE"],
             },
-            {
-                title: "Add listing",
-                href: "/guide/dashboard/listing/create",
-                icon: "Clock",
-                roles: ["GUIDE"],
-            },
+            // {
+            //     title: "Add listing",
+            //     href: "/guide/dashboard/listing/create",
+            //     icon: "Clock",
+            //     roles: ["GUIDE"],
+            // },
             {
                 title: "Bookings from travelers",
                 href: "/guide/dashboard/bookings",
