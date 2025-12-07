@@ -40,3 +40,26 @@ export async function createBooking(data: CreateBookingDto) {
         };
     }
 };
+
+export const updateBooking = async (bookingId: string, newStatus: string) => {
+    try {
+        const response = await serverFetch.patch(`/bookings/${bookingId}`, {
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || "Failed to update status");
+        }
+
+        return result;
+    } catch (error: any) {
+        console.error("Failed to update status:", error.message || error);
+        return {
+            success: false,
+            message: error.message || "Something went wrong",
+        };
+    }
+};

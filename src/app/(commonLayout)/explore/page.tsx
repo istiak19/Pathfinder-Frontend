@@ -1,11 +1,12 @@
-// import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 import ListingGrid from "../_component/Explore/ExploreGrid";
 import { getListings } from "@/services/guide/listingManagement";
+import TablePagination from "@/components/shared/TablePagination";
+import ListingsFilters from "@/app/(dashboardLayout)/_component/Guide/ListingsManagement/ListingsFilters";
 
-// ISR: Revalidate every 10 minutes for doctor listings
+// ISR: Revalidate every 10 minutes for listings
 export const revalidate = 600;
 
 const ExplorePage = async ({
@@ -16,7 +17,6 @@ const ExplorePage = async ({
     const searchParamsObj = await searchParams;
     const queryString = queryStringFormatter(searchParamsObj);
 
-    // Fetch doctors and specialties in parallel
     const listings = await getListings(queryString);
 
     return (
@@ -32,18 +32,17 @@ const ExplorePage = async ({
                 </div>
 
                 {/* Filters */}
-                {/* <DoctorSearchFilters specialties={specialties} /> */}
+                <ListingsFilters />
 
-                {/* Doctor Grid */}
+                {/* listings Grid */}
                 <Suspense fallback={<TableSkeleton columns={3} />}>
                     <ListingGrid listings={listings.data || []} />
                 </Suspense>
 
-                {/* Pagination */}
-                {/* <TablePagination
-                    currentPage={doctorsResponse?.data?.meta?.page || 1}
-                    totalPages={doctorsResponse?.data?.meta?.totalPage || 1}
-                /> */}
+                <TablePagination
+                    currentPage={listings?.meta?.page || 1}
+                    totalPages={listings?.meta?.totalPages || 1}
+                />
             </div>
         </div>
     );

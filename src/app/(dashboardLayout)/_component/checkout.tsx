@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -28,7 +29,7 @@ const Checkout = ({ bookingId }: CheckoutProps) => {
             } else {
                 toast.error(res.message || "Failed to initiate payment");
             }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
         } catch (err: any) {
             console.error(err);
             toast.error(err.message || "Payment request failed");
@@ -47,10 +48,19 @@ const Checkout = ({ bookingId }: CheckoutProps) => {
     return (
         <div className="max-w-xl mx-auto py-20 text-center space-y-6">
             <h1 className="text-2xl font-bold">Checkout</h1>
+
             <p className="text-gray-600 dark:text-gray-300">
                 You are about to pay for booking ID: <strong>{bookingId}</strong>
             </p>
-            <Button onClick={handlePayment} disabled={loading} size="lg">
+
+            <p className="text-sm text-muted-foreground">
+                This payment is part of the Local Guide project. Once completed, your booking will be
+                confirmed and your assigned guide will receive your details immediately.
+            </p>
+
+            <Button onClick={handlePayment}
+                className="cursor-pointer"
+                disabled={loading} size="lg">
                 {loading ? "Processing..." : "Proceed to Payment"}
             </Button>
         </div>

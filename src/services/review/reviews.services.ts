@@ -6,7 +6,7 @@ import { IReviewFormData } from "@/types/review.interface";
 
 export async function getReviews(queryString?: string) {
     try {
-        const url = queryString ? `/review?${queryString}` : "/review";
+        const url = queryString ? `/reviews?${queryString}` : "/reviews";
 
         const response = await serverFetch.get(url);
         const result = await response.json();

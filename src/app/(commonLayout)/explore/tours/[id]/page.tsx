@@ -1,5 +1,5 @@
 import ListingContent from "@/app/(commonLayout)/_component/ListingDetails/ListingContent";
-// import ListingReviews from "@/app/(commonLayout)/_component/ListingDetails/ListingReview";
+import ListingReviews from "@/app/(commonLayout)/_component/ListingDetails/ListingReview";
 import { getListingById } from "@/services/guide/listingManagement";
 
 const ListingDetailsPage = async ({
@@ -13,7 +13,7 @@ const ListingDetailsPage = async ({
     return (
         <div className="container mx-auto px-4 py-8 space-y-6">
             <ListingContent listing={result.data} />
-            {/* <ListingReviews listingId={id} /> */}
+            <ListingReviews listingId={id} />
         </div>
     );
 };
