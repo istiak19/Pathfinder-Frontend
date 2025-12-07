@@ -3,9 +3,9 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 
-export const getAllUser = async () => {
+export const getAllUser = async (queryString?: string) => {
     try {
-        const response = await serverFetch.get("/users", {
+        const response = await serverFetch.get(`/users${queryString ? `?${queryString}` : ""}`, {
             cache: "force-cache",
             next: { tags: ["user-info"] }
         });

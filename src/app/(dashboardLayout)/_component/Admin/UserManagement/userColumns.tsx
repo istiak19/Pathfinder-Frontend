@@ -21,10 +21,9 @@ export const usersColumns: Column<UserInfo>[] = [
         header: "Status",
         accessor: (user) => (
             <span
-                className={`px-2 py-1 text-xs font-semibold rounded-md capitalize 
-        ${user.status === "Active"
-                        ? "bg-green-600 text-white"
-                        : "bg-red-600 text-white"
+                className={`px-2 py-1 text-xs font-semibold rounded-md capitalize ${user.status === "Active"
+                    ? "bg-green-600 text-white"
+                    : "bg-red-600 text-white"
                     }`}
             >
                 {user.status}
