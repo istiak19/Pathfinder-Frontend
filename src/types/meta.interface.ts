@@ -42,11 +42,20 @@ export interface AdminDashboardMeta {
 }
 
 export interface BarChartData {
-    month: string; 
+    month: string;
     count: number;
 }
 
 export interface PieChartData {
-  status: string;
-  count: number;
+    status: string;
+    count: number;
+}
+
+export interface BookingStats {
+    bookingCount: number;
+    reviewCount: number;
+    formattedBookingStatusDistribution: {
+        status: "PENDING" | "ACCEPTED" | "REJECTED" | "CONFIRMED" | "COMPLETED" | "CANCELLED";
+        count: number;
+    }[];
 }
