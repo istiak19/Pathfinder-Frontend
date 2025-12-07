@@ -1,7 +1,7 @@
 import { IListing } from "./listing.interface";
 
 export interface IBooking {
-    id: string;
+    id?: string;
     date: string; // ISO date string
     status: BookingStatus;
     guests: number;

@@ -16,7 +16,7 @@ const BookingPage = async ({
     const totalPages = Math.ceil(
         guideBookings?.meta?.total / guideBookings?.meta?.limit
     );
-    console.log(guideBookings)
+    
     return (
         <div className="space-y-5">
             {/* <ListingManagementHeader user={user?.data} /> */}
