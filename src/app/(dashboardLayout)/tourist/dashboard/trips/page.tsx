@@ -4,6 +4,23 @@ import TripsCard from "@/app/(dashboardLayout)/_component/tourists/TripsCard";
 import TablePagination from "@/components/shared/TablePagination";
 import { getMeBooking } from "@/services/booking/booking.service";
 import { Booking } from "@/types/booking.interface";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "My Trips – Pathfinder",
+    description:
+        "View and manage your upcoming and past trips on Pathfinder. Track booking status, tour details, and stay updated with your travel plans.",
+    keywords: [
+        "Pathfinder",
+        "my trips",
+        "tourist dashboard",
+        "trip management",
+        "booking details",
+        "upcoming trips",
+        "past trips",
+        "travel plans",
+    ],
+};
 
 const TripsPage = async () => {
     const bookings = await getMeBooking();

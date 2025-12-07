@@ -3,6 +3,23 @@ import BookingCard from "@/app/(dashboardLayout)/_component/tourists/BookingCard
 import TablePagination from "@/components/shared/TablePagination";
 import { getMeBooking } from "@/services/booking/booking.service";
 import { Booking } from "@/types/booking.interface";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "My Wishlist – Pathfinder",
+    description:
+        "View and manage your saved tours and experiences on Pathfinder. Keep track of your favorite destinations and plan future adventures with ease.",
+    keywords: [
+        "Pathfinder",
+        "my wishlist",
+        "tourist dashboard",
+        "saved tours",
+        "favorite experiences",
+        "trip planning",
+        "travel inspiration",
+        "future trips",
+    ],
+};
 
 export default async function MyBookings() {
     const bookings = await getMeBooking();
