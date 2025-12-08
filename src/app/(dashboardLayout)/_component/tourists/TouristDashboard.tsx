@@ -27,7 +27,7 @@ const TouristDashboard = ({
                         <CardTitle>Total Bookings</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <span className="text-2xl font-bold">{data.bookingCount}</span>
+                        <span className="text-2xl font-bold">{data?.bookingCount}</span>
                     </CardContent>
                 </Card>
 
@@ -37,7 +37,7 @@ const TouristDashboard = ({
                         <CardTitle>Total Reviews</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <span className="text-2xl font-bold">{data.reviewCount}</span>
+                        <span className="text-2xl font-bold">{data?.reviewCount}</span>
                     </CardContent>
                 </Card>
 
@@ -67,7 +67,7 @@ const TouristDashboard = ({
                         <CardTitle>Booking Status</CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-2">
-                        {data.formattedBookingStatusDistribution.map((item) => (
+                        {data?.formattedBookingStatusDistribution.map((item) => (
                             <div key={item.status} className="flex justify-between items-center">
                                 <span className="capitalize">{item.status}</span>
                                 <Badge
@@ -79,7 +79,7 @@ const TouristDashboard = ({
                                                 : "destructive"
                                     }
                                 >
-                                    {item.count}
+                                    {item?.count}
                                 </Badge>
                             </div>
                         ))}

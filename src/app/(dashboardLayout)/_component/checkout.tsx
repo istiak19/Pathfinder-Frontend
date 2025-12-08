@@ -23,9 +23,9 @@ const Checkout = ({ bookingId }: CheckoutProps) => {
         try {
             const res = await createPayment({ bookingId } as BookingPaymentDto);
 
-            if (res.success && res.data?.paymentUrl) {
-                toast.success(res.message || "Redirecting to payment...");
-                window.location.href = res.data.paymentUrl;
+            if (res.success && res.data?.gateway_url) {
+                toast.success(res.message || "Redirecting to payment..");
+                window.location.href = res.data.gateway_url;
             } else {
                 toast.error(res.message || "Failed to initiate payment");
             }
