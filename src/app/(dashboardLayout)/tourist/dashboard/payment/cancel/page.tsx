@@ -1,43 +1,30 @@
-// "use client";
+import PaymentPageClient from "@/app/(dashboardLayout)/_component/tourists/Payment/SuccessModalClient";
+import { Metadata } from "next";
+export const dynamic = "force-dynamic";
 
-// import { useState } from "react";
-// import { useRouter, useSearchParams } from "next/navigation";
-// import { ReusablePaymentStatusModal } from "@/app/(dashboardLayout)/_component/ReusablePaymentStatusModal";
+export const metadata: Metadata = {
+    title: "Payment Cancelled – Pathfinder",
+    description:
+        "Your payment was completed successfully! View your booking details, trip information, and confirmation on Pathfinder.",
+    keywords: [
+        "Pathfinder",
+        "payment success",
+        "payment confirmation",
+        "booking payment",
+        "trip payment",
+        "tour booking",
+        "success page",
+        "travel booking confirmation",
+    ],
+};
 
-// const CancelPage = () => {
-//     const router = useRouter();
-//     const searchParams = useSearchParams();
-//     const [open, setOpen] = useState(true);
-
-//     const data = {
-//         TransactionID: searchParams.get("transactionId") || "",
-//         Amount: `${searchParams.get("amount")} BDT`,
-//         Status: searchParams.get("status") || "",
-//     };
-
-//     return (
-//         <ReusablePaymentStatusModal
-//             open={open}
-//             setOpen={setOpen}
-//             type="cancel"
-//             title="Payment Cancelled"
-//             description={searchParams.get("message") || "You cancelled the payment."}
-//             details={data}
-//             buttonText="Back to Dashboard"
-//             onButtonClick={() => router.push("/tourist/dashboard")}
-//         />
-//     );
-// };
-
-// export default CancelPage;
-import React from 'react';
-
-const page = () => {
+const CancelPage = () => {
     return (
-        <div>
-            cancel
-        </div>
+        <PaymentPageClient
+            type="cancel"
+            title="Payment Cancelled"
+        />
     );
 };
 
-export default page;
+export default CancelPage;

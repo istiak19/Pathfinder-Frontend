@@ -1,46 +1,30 @@
-// "use client";
+import PaymentPageClient from "@/app/(dashboardLayout)/_component/tourists/Payment/SuccessModalClient";
+import { Metadata } from "next";
+export const dynamic = "force-dynamic";
 
-// import { useState } from "react";
-// import { useRouter, useSearchParams } from "next/navigation";
-// import { ReusablePaymentStatusModal } from "@/app/(dashboardLayout)/_component/ReusablePaymentStatusModal";
+export const metadata: Metadata = {
+    title: "Payment Failed – Pathfinder",
+    description:
+        "Your payment was completed successfully! View your booking details, trip information, and confirmation on Pathfinder.",
+    keywords: [
+        "Pathfinder",
+        "payment success",
+        "payment confirmation",
+        "booking payment",
+        "trip payment",
+        "tour booking",
+        "success page",
+        "travel booking confirmation",
+    ],
+};
 
-// const FailPage = () => {
-//   const router = useRouter();
-//   const searchParams = useSearchParams();
-//   const [open, setOpen] = useState(true);
-
-//   const data = {
-//     TransactionID: searchParams.get("transactionId") || "",
-//     Amount: `${searchParams.get("amount")} BDT`,
-//     Status: searchParams.get("status") || "",
-//   };
-
-//   return (
-//     <ReusablePaymentStatusModal
-//       open={open}
-//       setOpen={setOpen}
-//       type="fail"
-//       title="Payment Failed!"
-//       description={
-//         searchParams.get("message") || "Your payment could not be completed."
-//       }
-//       details={data}
-//       buttonText="Try Again"
-//       onButtonClick={() => router.push("/tourist/dashboard/payment")}
-//     />
-//   );
-// };
-
-// export default FailPage;
-
-import React from 'react';
-
-const page = () => {
+const FailPage = () => {
   return (
-    <div>
-      fail
-    </div>
+    <PaymentPageClient
+      type="fail"
+      title="Payment Failed!"
+    />
   );
 };
 
-export default page;
+export default FailPage;

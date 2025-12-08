@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ReusablePaymentStatusModal } from "@/app/(dashboardLayout)/_component/ReusablePaymentStatusModal";
 
@@ -21,6 +21,14 @@ const PaymentPageClient = ({ type, title, description }: Props) => {
         Status: searchParams.get("status") || "",
     };
 
+    // ✅ Decide redirect route based on payment result
+    const redirectRoute = useMemo(() => {
+        if (type === "success") return "/tourist/dashboard/trips";
+        if (type === "fail") return "/tourist/dashboard/wishlist";
+        if (type === "cancel") return "/explore";
+        return "/";
+    }, [type]);
+
     return (
         <>
             <ReusablePaymentStatusModal
@@ -30,13 +38,13 @@ const PaymentPageClient = ({ type, title, description }: Props) => {
                 title={title}
                 description={description || searchParams.get("message") || ""}
                 details={data}
-                buttonText="Go to My Trips"
-                onButtonClick={() => router.push("/tourist/dashboard/trips")}
+                buttonText="Continue"
+                onButtonClick={() => router.push(redirectRoute)}
             />
 
             {!open && (
                 <button
-                    className="mt-4 p-2 bg-blue-600 text-white rounded"
+                    className="mt-4 p-2 bg-blue-600 cursor-pointer text-white rounded"
                     onClick={() => setOpen(true)}
                 >
                     Show Payment Status
