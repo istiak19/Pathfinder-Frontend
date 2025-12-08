@@ -7,6 +7,7 @@ import { getAllUser } from "@/services/user/userAllGet";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Metadata } from "next";
 import { Suspense } from "react";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
     title: "All Users – Pathfinder",

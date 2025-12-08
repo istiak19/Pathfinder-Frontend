@@ -22,12 +22,14 @@ interface TripsCardProps {
 
 const TripsCard = ({ booking }: TripsCardProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
     const [rating, setRating] = useState(5);
     const [comment, setComment] = useState("");
     const [submitting, setSubmitting] = useState(false);
+    console.log(booking)
 
     const handleSubmitReview = async () => {
-        // Basic validation
         if (rating < 1 || rating > 10) {
             toast.error("Rating must be between 1 and 10");
             return;
@@ -41,9 +43,7 @@ const TripsCard = ({ booking }: TripsCardProps) => {
 
         try {
             const payload = { bookingId: booking.id, rating, comment };
-            console.log("Review payload:", payload);
 
-            // Call API
             const res = await createReview(payload);
 
             if (res.success) {
@@ -55,8 +55,7 @@ const TripsCard = ({ booking }: TripsCardProps) => {
                 toast.error(res.message || "Failed to submit review");
             }
         } catch (err: any) {
-            console.error(err);
-            toast.error(err?.response?.data?.message || err.message || "Failed to submit review");
+            toast.error(err?.response?.data?.message || err.message);
         } finally {
             setSubmitting(false);
         }
@@ -81,20 +80,33 @@ const TripsCard = ({ booking }: TripsCardProps) => {
                 <span>Price: ${booking.payment?.amount || booking.listing.price}</span>
             </div>
 
-            {booking.status === "COMPLETED" && (
-                <div className="mt-2">
-                    <Button size="sm" className="hover:scale-105 transition-transform cursor-pointer" onClick={() => setIsModalOpen(true)}>
+            <div className="flex gap-3 mt-3">
+                <Button
+                    size="sm"
+                    variant="outline"
+                    className="cursor-pointer hover:scale-105 transition"
+                    onClick={() => setIsDetailsOpen(true)}
+                >
+                    View Details
+                </Button>
+
+                {booking.status === "COMPLETED" && (
+                    <Button
+                        size="sm"
+                        className="hover:scale-105 transition cursor-pointer"
+                        onClick={() => setIsModalOpen(true)}
+                    >
                         Leave Review
                     </Button>
-                </div>
-            )}
+                )}
+            </div>
 
-            {/* ShadCN Modal */}
+            {/* ⭐ Review Modal */}
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-2xl shadow-xl p-6">
+                <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900 rounded-2xl p-6">
                     <DialogHeader>
-                        <DialogTitle className="text-xl font-bold">Leave Your Review</DialogTitle>
-                        <DialogDescription className="text-gray-600 dark:text-gray-400">
+                        <DialogTitle>Leave Your Review</DialogTitle>
+                        <DialogDescription>
                             Please provide your rating (1-10) and a comment for this tour.
                         </DialogDescription>
                     </DialogHeader>
@@ -111,9 +123,9 @@ const TripsCard = ({ booking }: TripsCardProps) => {
                                     const value = Number(e.target.value);
                                     if (value >= 1 && value <= 10) setRating(value);
                                 }}
-                                className="w-full p-2 border rounded-lg text-black dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700"
+                                className="w-full p-2 border rounded-lg dark:bg-gray-800 dark:border-gray-700"
                             />
-                            <div className="text-sm mt-1 text-gray-700 dark:text-gray-300">{rating} / 10</div>
+                            <div className="text-sm mt-1">{rating} / 10</div>
                         </div>
 
                         <div>
@@ -121,23 +133,60 @@ const TripsCard = ({ booking }: TripsCardProps) => {
                             <textarea
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
-                                className="w-full p-3 border rounded-lg shadow-sm text-black dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700"
+                                className="w-full p-3 border rounded-lg dark:bg-gray-800 dark:border-gray-700"
                                 rows={4}
                                 placeholder="Write your experience..."
                             />
                         </div>
                     </div>
 
-                    <DialogFooter className="mt-6 flex justify-end gap-3">
-                        <Button variant="secondary"
+                    <DialogFooter className="mt-6">
+                        <Button
+                            variant="secondary"
+                            onClick={() => setIsModalOpen(false)}
                             className="cursor-pointer"
-                            onClick={() => setIsModalOpen(false)}>
+                        >
                             Cancel
                         </Button>
-                        <Button onClick={handleSubmitReview}
+                        <Button
+                            disabled={submitting}
+                            onClick={handleSubmitReview}
                             className="cursor-pointer"
-                            disabled={submitting}>
+                        >
                             {submitting ? "Submitting..." : "Submit"}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* View Details Modal */}
+            <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
+                <DialogContent className="sm:max-w-lg bg-white dark:bg-gray-900 rounded-2xl p-6">
+                    <DialogHeader>
+                        <DialogTitle>Booking Details</DialogTitle>
+                        <DialogDescription>
+                            Here are the full details of your booking.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="space-y-3 mt-4 text-sm">
+                        <p><strong>Title:</strong> {booking.listing.title}</p>
+                        <p><strong>Itinerary:</strong> {booking.listing.itinerary}</p>
+                        <p><strong>Date:</strong> {format(new Date(booking.date), "dd MMM yyyy • hh:mm a")}</p>
+                        <p><strong>Guests:</strong> {booking.guests}</p>
+                        <p><strong>Status:</strong> {booking.status}</p>
+                        <p><strong>Guide:</strong> {booking.listing.guide?.name || "Not Assigned"}</p>
+                        <p><strong>Price:</strong> ${booking.payment?.amount || booking.listing.price}</p>
+                        <p><strong>Payment Status:</strong> {booking.payment?.status || "N/A"}</p>
+                    </div>
+
+                    <DialogFooter className="mt-6">
+                        <Button
+                            variant="secondary"
+                            className="cursor-pointer"
+                            onClick={() => setIsDetailsOpen(false)}
+                        >
+                            Close
                         </Button>
                     </DialogFooter>
                 </DialogContent>

@@ -4,6 +4,7 @@ import TableSkeleton from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 import { Metadata } from "next";
+export const dynamic = "force-dynamic";
 import BookingsTable from "@/app/(dashboardLayout)/_component/Admin/BookingManagement/BookingsTable";
 import { getAllBookings } from "@/services/booking/booking.service";
 import AdminBookingFilter from "@/app/(dashboardLayout)/_component/Admin/BookingManagement/AdminBookingFilter";

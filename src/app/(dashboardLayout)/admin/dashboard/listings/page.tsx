@@ -5,6 +5,7 @@ import { getListings } from "@/services/listings/listingManagement";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 import { Metadata } from "next";
+export const dynamic = "force-dynamic";
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import ListingsTable from "@/app/(dashboardLayout)/_component/Admin/ListingManagement/ListingsTable";
 
