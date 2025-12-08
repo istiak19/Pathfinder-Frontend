@@ -30,8 +30,8 @@ const TripsPage = async () => {
     );
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="p-6 space-y-4">
+        <div className="container mx-auto p-4">
+            <div className="grid grid-cols-3 gap-2">
                 {filteredBookings.length === 0 ? (
                     <p className="text-gray-500 dark:text-gray-400">No trips available.</p>
                 ) : (
