@@ -52,9 +52,9 @@ export const createListingZodSchema = z.object({
     maxGroupSize: z.number().int().min(1, "Max group size must be at least 1"),
     category: z.nativeEnum(ListingCategory),
     city: z.string().min(1, "City is required"),
-    images: z.instanceof(File).refine((file) => file.size > 0, {
-        message: "Profile photo is required",
-    }),
+    // images: z
+    //     .instanceof(File)
+    //     .refine((file) => file.size > 0, { message: "Profile photo is required" }),
     guideId: z.string().uuid("Guide ID must be a valid UUID"),
 });
 

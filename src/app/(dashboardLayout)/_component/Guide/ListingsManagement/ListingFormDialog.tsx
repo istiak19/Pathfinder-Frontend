@@ -24,15 +24,32 @@ interface IListingFormDialogProps {
 
 const categories = ["NATURE", "CULTURE", "ADVENTURE", "HISTORY", "FOOD"] as const;
 
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
 const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListingFormDialogProps) => {
     const formRef = useRef<HTMLFormElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const isEdit = !!listing;
-    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = Array.from(e.target.files || []);
-        setSelectedFiles(files);
+        const file = e.target.files?.[0] || null;
+        if (!file) return;
+
+        if (!ALLOWED_TYPES.includes(file.type)) {
+            toast.error("Invalid file type! Only JPG, PNG, WEBP allowed.");
+            e.target.value = "";
+            return;
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+            toast.error("File too large! Maximum size is 2MB.");
+            e.target.value = "";
+            return;
+        }
+
+        setSelectedFile(file);
     };
 
     const [state, formAction, pending] = useActionState(
@@ -42,8 +59,7 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
 
     const handleClose = () => {
         if (fileInputRef.current) fileInputRef.current.value = "";
-        if (selectedFiles) setSelectedFiles([]);
-
+        setSelectedFile(null);
         formRef.current?.reset();
         onClose();
     };
@@ -51,21 +67,19 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
     useEffect(() => {
         if (state?.success) {
             toast.success(state.message || (isEdit ? "Listing updated" : "Listing created"));
-            formRef.current?.reset();
-            onSuccess();
-            onClose();
+
+            // Reset form and clear selected file in next tick
+            setTimeout(() => {
+                formRef.current?.reset();
+                setSelectedFile(null);
+                onSuccess();
+                onClose();
+            }, 0);
         } else if (state && !state.success) {
             toast.error(state.message);
-
-            if (selectedFiles.length > 0 && fileInputRef.current) {
-                const dataTransfer = new DataTransfer();
-                selectedFiles.forEach((file) => {
-                    dataTransfer.items.add(file);
-                });
-                fileInputRef.current.files = dataTransfer.files;
-            }
         }
-    }, [state, onSuccess, onClose, selectedFiles, isEdit]);
+    }, [state, onSuccess, onClose, isEdit]);
+    console.log(state)
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>
@@ -196,20 +210,6 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
                             <InputFieldError state={state} field="maxGroupSize" />
                         </Field>
 
-                        {/* Max Group Size */}
-                        {isEdit && (<Field>
-                            <FieldLabel htmlFor="maxGroupSize" className="dark:text-gray-200">Status</FieldLabel>
-                            <Input
-                                id="status"
-                                name="status"
-                                placeholder="Status"
-                                min="1"
-                                defaultValue={state?.formData?.status || listing?.status}
-                                className="dark:bg-gray-800 dark:text-gray-100"
-                            />
-                            <InputFieldError state={state} field="maxGroupSize" />
-                        </Field>)}
-
                         {/* City */}
                         <Field>
                             <FieldLabel htmlFor="city" className="dark:text-gray-200">City</FieldLabel>
@@ -237,54 +237,33 @@ const ListingFormDialog = ({ open, onClose, onSuccess, listing, user }: IListing
                             <InputFieldError state={state} field="guideId" />
                         </Field>
 
-                        {/* Profile Photo */}
+                        {/* Single Image Upload */}
                         {!isEdit && (
                             <Field>
-                                <FieldLabel htmlFor="files" className="dark:text-gray-200">
-                                    Images
-                                </FieldLabel>
-
-                                {selectedFiles.length > 0 && (
-                                    <div className="flex gap-2 flex-wrap mb-2">
-                                        {selectedFiles.map((file, index) => (
-                                            <Image
-                                                key={index}
-                                                src={URL.createObjectURL(file)}
-                                                alt="Preview"
-                                                width={60}
-                                                height={60}
-                                                className="rounded-md object-cover"
-                                            />
-                                        ))}
-                                    </div>
-                                )}
-
+                                <FieldLabel htmlFor="file" className="dark:text-gray-200">Image</FieldLabel>
                                 <Input
                                     ref={fileInputRef}
-                                    id="files"
-                                    name="files"
+                                    id="file"
+                                    name="file"
                                     type="file"
-                                    accept="image/*"
-                                    multiple
+                                    accept={ALLOWED_TYPES.join(",")}
                                     onChange={handleFileChange}
-                                    className="dark:bg-gray-800 dark:text-gray-100"
                                 />
-
-                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    Upload multiple images for the listing
-                                </p>
-
-                                <InputFieldError state={state} field="images" />
+                                {selectedFile && (
+                                    <div className="w-32 h-48 relative mt-2">
+                                        <Image src={URL.createObjectURL(selectedFile)} alt="Preview" fill className="object-cover rounded-md" />
+                                    </div>
+                                )}
                             </Field>
                         )}
                     </div>
 
                     {/* Footer */}
                     <div className="flex justify-end gap-2 px-6 py-4 border-t shrink-0 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                        <Button type="button" variant="outline" onClick={onClose} disabled={pending} className="dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700">
+                        <Button type="button" variant="outline" onClick={handleClose} disabled={pending} className="dark:border-gray-600 cursor-pointer dark:text-gray-200 dark:hover:bg-gray-700">
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={pending} className="dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white">
+                        <Button type="submit" disabled={pending} className="dark:bg-blue-600 cursor-pointer dark:hover:bg-blue-700 dark:text-white">
                             {pending ? "Saving..." : isEdit ? "Update Listing" : "Create Listing"}
                         </Button>
                     </div>
