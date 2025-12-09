@@ -6,6 +6,7 @@ import TableSkeleton from "@/components/shared/TableSkeleton";
 import { getGuideBookings } from "@/services/listings/listingManagement";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
+export const dynamic = "force-dynamic";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

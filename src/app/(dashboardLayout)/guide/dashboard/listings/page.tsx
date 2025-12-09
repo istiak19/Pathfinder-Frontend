@@ -8,6 +8,7 @@ import { getMeUser } from "@/services/user/getMeUser";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
 import { Metadata } from "next";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
     title: "All Listings – Pathfinder",
