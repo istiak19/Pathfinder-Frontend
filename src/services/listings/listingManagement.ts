@@ -12,6 +12,7 @@ export enum ListingStatus {
 }
 
 export async function createListing(_prevState: any, formData: FormData) {
+    const imageFile = formData.get("file");
     // Validate payload first
     const validationPayload = {
         title: formData.get("title") as string,
@@ -24,11 +25,11 @@ export async function createListing(_prevState: any, formData: FormData) {
         maxGroupSize: Number(formData.get("maxGroupSize")),
         city: formData.get("city") as string,
         guideId: formData.get("guideId") as string,
-        images: formData.get("files") as File,
+        images: imageFile instanceof File ? imageFile : undefined,
     };
 
     const validatedPayload = zodValidator(validationPayload, createListingZodSchema);
-    console.log("🔥 FINAL DATA SENT TO:", validatedPayload);
+    // console.log("🔥 FINAL DATA SENT TO:", validatedPayload);
 
     if (!validatedPayload.success && validatedPayload.errors) {
         return {
@@ -61,16 +62,16 @@ export async function createListing(_prevState: any, formData: FormData) {
 
     };
 
-    console.log("🔥 FINAL DATA SENT TO BACKEND:", backendPayload);
+    // console.log("🔥 FINAL DATA SENT TO BACKEND:", backendPayload);
 
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(backendPayload));
-    newFormData.append("files", formData.get("files") as Blob);
-
+    newFormData.append("file", formData.get("file") as Blob);
 
     try {
         const response = await serverFetch.post("/listings", { body: newFormData, });
         return await response.json();
+        console.log(response)
     } catch (error: any) {
         return {
             success: false,
