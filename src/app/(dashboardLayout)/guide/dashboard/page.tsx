@@ -2,6 +2,7 @@ import { getMeta } from "@/services/meta/meta.service";
 import GuideMetaDashboard from "../../_component/Guide/GuideMetaDashboard";
 import { Metadata } from "next";
 import { Suspense } from "react";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Guide Dashboard – Pathfinder",

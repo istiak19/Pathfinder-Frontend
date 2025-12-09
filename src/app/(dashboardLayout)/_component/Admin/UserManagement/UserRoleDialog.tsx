@@ -15,48 +15,44 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { updateUserStatus } from "@/services/user/user.service";
-import { UserInfo } from "@/types/user.interface";
-import { useRef, useState } from "react";
+import { updateUserRole } from "@/services/user/user.service";
+import { UserInfo, UserRole } from "@/types/user.interface";
+import { useRef, useState, useEffect } from "react";
 import { toast } from "sonner";
 
-interface IUserStatusDialogProps {
+interface IUserRoleDialogProps {
     open: boolean;
     onClose: () => void;
     onSuccess: () => void;
     user?: UserInfo;
 }
 
-const UserStatusDialog = ({
-    open,
-    onClose,
-    onSuccess,
-    user,
-}: IUserStatusDialogProps) => {
+export const UserRoleDialog = ({ open, onClose, onSuccess, user }: IUserRoleDialogProps) => {
     const formRef = useRef<HTMLFormElement>(null);
     const [pending, setPending] = useState(false);
+    const [role, setRole] = useState<UserRole>("TOURIST");
 
-    const [status, setStatus] = useState(user?.status || "Active");
+    useEffect(() => {
+        if (user?.role) setRole(user.role as UserRole);
+    }, [user]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) return;
 
         setPending(true);
-
         try {
-            const res = await updateUserStatus(user.id!, status);
-
+            const res = await updateUserRole(user.id!, role);
             if (res.success) {
-                toast.success(res.message || "User status updated");
+                toast.success(res.message || "User role updated");
                 onSuccess();
                 onClose();
             } else {
-                toast.error(res.message || "Failed to update user status");
+                toast.error(res.message || "Failed to update role");
             }
         } catch (err) {
-            console.error("Error updating user:", err);
-            toast.error("Failed to update user status");
+            console.error(err);
+            toast.error("Failed to update role");
         } finally {
             setPending(false);
         }
@@ -71,50 +67,35 @@ const UserStatusDialog = ({
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="max-h-[90vh] flex flex-col p-0">
                 <DialogHeader className="px-6 pt-6 pb-4">
-                    <DialogTitle>Change User Status</DialogTitle>
+                    <DialogTitle>Change User Role</DialogTitle>
                 </DialogHeader>
 
-                <form
-                    ref={formRef}
-                    onSubmit={handleSubmit}
-                    className="flex flex-col flex-1 min-h-0"
-                >
+                <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
                     <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
                         <Field>
-                            <FieldLabel>Status</FieldLabel>
-
+                            <FieldLabel>Role</FieldLabel>
                             <Select
-                                value={status}
-                                onValueChange={setStatus}
-                                disabled={pending}
-                            >
+                                value={role}
+                                onValueChange={(value) => setRole(value as UserRole)}
+                                disabled={pending}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Select status" />
+                                    <SelectValue placeholder="Select role" />
                                 </SelectTrigger>
-
                                 <SelectContent>
-                                    <SelectItem value="Active">Active</SelectItem>
-                                    <SelectItem value="Inactive">Inactive</SelectItem>
+                                    <SelectItem value="ADMIN">Admin</SelectItem>
+                                    <SelectItem value="TOURIST">Tourist</SelectItem>
+                                    <SelectItem value="GUIDE">Guide</SelectItem>
                                 </SelectContent>
                             </Select>
                         </Field>
                     </div>
 
                     <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50 dark:bg-black">
-                        <Button
-                            type="button"
-                            className="cursor-pointer"
-                            variant="outline"
-                            onClick={handleClose}
-                            disabled={pending}
-                        >
+                        <Button type="button" variant="outline" onClick={handleClose} disabled={pending}>
                             Cancel
                         </Button>
-
-                        <Button type="submit"
-                            className="cursor-pointer"
-                            disabled={pending}>
-                            {pending ? "Updating..." : "Update Status"}
+                        <Button type="submit" disabled={pending}>
+                            {pending ? "Updating..." : "Update Role"}
                         </Button>
                     </div>
                 </form>
@@ -122,5 +103,3 @@ const UserStatusDialog = ({
         </Dialog>
     );
 };
-
-export default UserStatusDialog;

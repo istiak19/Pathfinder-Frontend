@@ -20,6 +20,7 @@ function StatusBadge({ listing }: { listing: IListing }) {
 
     const handleToggle = async () => {
         const newStatus = status === ListingStatus.Active ? ListingStatus.Inactive : ListingStatus.Active;
+        setStatus(newStatus); 
         setLoading(true);
 
         try {
@@ -28,6 +29,7 @@ function StatusBadge({ listing }: { listing: IListing }) {
             if (res.success) {
                 toast.success(res.message || "Listing status updated");
             } else {
+                setStatus(status);
                 toast.error(res.message || "Failed to update listing status");
             }
         } catch (err) {
@@ -41,11 +43,21 @@ function StatusBadge({ listing }: { listing: IListing }) {
 
     return (
         <Badge
-            variant={listing?.status === ListingStatus.Active ? "default" : "destructive"}
-            className={`cursor-pointer ${loading ? "opacity-50 pointer-events-none" : ""}`}
+            variant={status === ListingStatus.Active ? "default" : "destructive"}
+            className={`
+                cursor-pointer 
+                select-none
+                px-3 py-1
+                rounded-lg
+                transition-all
+                duration-200
+                hover:scale-105
+                ${loading ? "opacity-50 pointer-events-none" : ""}
+            `}
             onClick={handleToggle}
+            title="Click to toggle status"
         >
-            {listing?.status}
+            {status}
         </Badge>
     );
 }

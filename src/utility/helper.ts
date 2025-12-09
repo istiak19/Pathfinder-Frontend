@@ -3,7 +3,7 @@ import { RouteConfig, UserRole } from "@/types/user.interface";
 export const authRoutes = ["/login", "/register", "/forgot-password"];
 
 export const commonProtectedRoutes: RouteConfig = {
-    exact: ["/my-profile", "/settings", "/reset-password"],
+    exact: ["/my-profile", "/settings", "/reset-password", "/booking"],
     patterns: [], // [/password/change-password, /password/reset-password => /password/*]
 };
 
