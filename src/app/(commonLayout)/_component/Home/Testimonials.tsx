@@ -16,9 +16,9 @@ interface Testimonial {
 }
 
 const testimonials: Testimonial[] = [
-    { id: 1, name: "Emma", comment: "Amazing experience!", photo: "/users/emma.jpg", rating: 5 },
-    { id: 2, name: "Liam", comment: "Guide was very friendly!", photo: "/users/liam.jpg", rating: 4.8 },
-    { id: 3, name: "Sophia", comment: "Hidden gems discovered!", photo: "/users/sophia.jpg", rating: 5 },
+    { id: 1, name: "Ayesha Rahman", comment: "Amazing experience!", photo: "/users/user1", rating: 9 },
+    { id: 2, name: "Mehedi Hasan", comment: "The guide was very friendly!", photo: "/users/user2", rating: 8.8 },
+    { id: 3, name: "Nusrat Jahan", comment: "Discovered beautiful hidden places!", photo: "/users/user3", rating: 9.5 },
 ];
 
 export default function Testimonials() {
