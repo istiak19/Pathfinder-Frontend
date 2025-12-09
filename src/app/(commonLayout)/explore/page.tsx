@@ -5,6 +5,26 @@ import ListingGrid from "../_component/Explore/ExploreGrid";
 import { getListings } from "@/services/listings/listingManagement";
 import TablePagination from "@/components/shared/TablePagination";
 import ListingsFilters from "@/app/(dashboardLayout)/_component/Guide/ListingsManagement/ListingsFilters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Explore Tours & Travel Experiences – Pathfinder",
+    description:
+        "Discover exciting tours, destinations, and travel experiences across Bangladesh. Filter by city, category, budget, and language to find the perfect adventure on Pathfinder.",
+    keywords: [
+        "Pathfinder",
+        "explore tours",
+        "travel experiences",
+        "tour packages",
+        "Bangladesh travel",
+        "adventure tours",
+        "nature tours",
+        "city tours",
+        "budget trips",
+        "popular destinations",
+        "tour guide finder",
+    ],
+};
 
 // ISR: Revalidate every 10 minutes for listings
 export const revalidate = 600;

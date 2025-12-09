@@ -2,25 +2,21 @@ import { Metadata } from "next";
 import RegisterPage from "../_component/RegisterPage";
 
 export const metadata: Metadata = {
-    title: "Register | PHCareHub",
+    title: "Create Account – Pathfinder",
     description:
-        "Create your PHCareHub account to manage appointments, connect with doctors, and access personalized healthcare services.",
-    openGraph: {
-        title: "Register | PHCareHub",
-        description: "Join PHCareHub — your personal healthcare management platform.",
-        url: "https://yourdomain.com/register",
-        siteName: "PHCareHub",
-        images: [
-            {
-                url: "/og-register.png",
-                width: 1200,
-                height: 630,
-                alt: "PHCareHub Register",
-            },
-        ],
-        locale: "en_US",
-        type: "website",
-    },
+        "Sign up on Pathfinder to explore tours, book travel experiences, or become a local guide. Create your account in minutes and start your journey today.",
+    keywords: [
+        "Pathfinder signup",
+        "create account",
+        "register",
+        "tourist signup",
+        "guide signup",
+        "travel account create",
+        "tour booking account",
+        "local guide registration",
+        "travel platform signup",
+        "new user registration",
+    ],
 };
 
 const Register = () => {
