@@ -153,6 +153,22 @@ export async function getListings(queryString?: string) {
     }
 };
 
+export async function getGuideListings(queryString?: string) {
+    try {
+        const response = await serverFetch.get(`/listings/guide-listings${queryString ? `?${queryString}` : ""}`, {
+            next: { tags: ["listings"] }
+        });
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+};
+
 export async function getGuideBookings(queryString?: string) {
     try {
         const response = await serverFetch.get(`/bookings/guide/my${queryString ? `?${queryString}` : ""}`);

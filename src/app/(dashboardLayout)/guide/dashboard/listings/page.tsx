@@ -3,7 +3,7 @@ import ListingsFilters from "@/app/(dashboardLayout)/_component/Guide/ListingsMa
 import ListingTable from "@/app/(dashboardLayout)/_component/Guide/ListingsManagement/ListingTable";
 import TablePagination from "@/components/shared/TablePagination";
 import TableSkeleton from "@/components/shared/TableSkeleton";
-import { getListings } from "@/services/listings/listingManagement";
+import { getGuideListings } from "@/services/listings/listingManagement";
 import { getMeUser } from "@/services/user/getMeUser";
 import { queryStringFormatter } from "@/utility/formatters";
 import { Suspense } from "react";
@@ -33,7 +33,7 @@ const ListingManagementPage = async ({
 }) => {
     const searchParamsObj = await searchParams;
     const queryString = queryStringFormatter(searchParamsObj);
-    const listing = await getListings(queryString);
+    const listing = await getGuideListings(queryString);
     const user = await getMeUser();
     const totalPages = Math.ceil(
         listing?.meta?.total / listing?.meta?.limit
