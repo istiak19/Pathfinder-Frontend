@@ -13,16 +13,22 @@ const categories: Category[] = [
     { id: 1, name: "Food", icon: "/icons/food.png" },
     { id: 2, name: "Adventure", icon: "/icons/adventure.png" },
     { id: 3, name: "Culture", icon: "/icons/culture.png" },
-    { id: 4, name: "Photography", icon: "/icons/photography.png" },
+    { id: 4, name: "Art", icon: "/icons/Art.jpg" },
+    { id: 5, name: "Nature", icon: "/icons/Nature.jpg" },
+    { id: 6, name: "Shopping", icon: "/icons/Shopping.jpg" },
+    { id: 7, name: "Sports", icon: "/icons/Sports.jpg" },
+    { id: 8, name: "Wellness", icon: "/icons/Wellness.jpg" },
+    { id: 9, name: "History", icon: "/icons/History.jpg" },
+    { id: 9, name: "Entertainment", icon: "/icons/Entertainment.jpg" },
 ];
 
 const Categories: React.FC = () => {
     return (
-        <section className="py-20 px-4 bg-linear-to-r from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-500">
+        <section className="py-16 bg-linear-to-r from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-500">
             <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-gray-800 dark:text-white">
                 Tour Categories
             </h2>
-            <div className="flex flex-wrap justify-center gap-8">
+            <div className="flex flex-wrap justify-center gap-2">
                 {categories.map((cat: Category, i) => (
                     <motion.div
                         key={cat.id}
@@ -33,12 +39,12 @@ const Categories: React.FC = () => {
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.2, duration: 0.5 }}
                     >
-                        <div className="w-16 h-16 mb-4 relative">
+                        <div className="w-16 h-16 relative">
                             <Image
                                 src={cat.icon}
                                 alt={cat.name}
                                 fill
-                                className="object-contain"
+                                className=" rounded-full"
                             />
                         </div>
                         <span className="font-semibold text-gray-800 dark:text-white text-lg text-center">

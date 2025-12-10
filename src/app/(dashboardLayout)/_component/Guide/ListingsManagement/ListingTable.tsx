@@ -66,7 +66,7 @@ const ListingTable = ({ listings }: ListingTableProps) => {
                 onEdit={handleEdit}
                 onDelete={handleDelete}
                 getRowKey={(listing) => listing.id!}
-                emptyMessage="No doctors found"
+                emptyMessage="No listings found"
             />
             {/* Edit Doctor Form Dialog */}
             <ListingFormDialog

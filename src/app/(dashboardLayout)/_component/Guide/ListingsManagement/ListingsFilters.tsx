@@ -20,7 +20,7 @@ const ListingsFilters = () => {
         { label: "History", value: "HISTORY" },
         { label: "Entertainment", value: "ENTERTAINMENT" }
     ];
-    
+
     return (
         <div className="space-y-3">
             {/* Row 1: Search and Refresh */}
@@ -57,10 +57,10 @@ const ListingsFilters = () => {
                 <SearchFilter paramName="city" placeholder="Search by city (e.g. Dhaka)" />
 
                 {/* language Filter */}
-                {/* <SearchFilter
+                <SearchFilter
                     paramName="language"
                     placeholder="Search by language (e.g. Bangla)"
-                /> */}
+                />
 
                 {/* Category Filter */}
                 <SearchFilter

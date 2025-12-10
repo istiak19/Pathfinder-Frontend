@@ -16,9 +16,99 @@ interface Testimonial {
 }
 
 const testimonials: Testimonial[] = [
-    { id: 1, name: "Ayesha Rahman", comment: "Amazing experience!", photo: "/users/user1", rating: 9 },
-    { id: 2, name: "Mehedi Hasan", comment: "The guide was very friendly!", photo: "/users/user2", rating: 8.8 },
-    { id: 3, name: "Nusrat Jahan", comment: "Discovered beautiful hidden places!", photo: "/users/user3", rating: 9.5 },
+    {
+        id: 1,
+        name: "Ayesha Rahman",
+        comment: "Amazing experience!",
+        photo: "https://i.ibb.co.com/fzQHM0d3/user1.jpg",
+        rating: 9
+    },
+
+    {
+        id: 2,
+        name: "Mehedi Hasan",
+        comment: "The guide was very friendly!",
+        photo: "https://i.ibb.co.com/QFvHbkHs/user2.jpg",
+        rating: 8.8
+    },
+    {
+        id: 3,
+        name: "Nusrat Jahan",
+
+        comment: "Discovered beautiful hidden places!",
+        photo: "https://i.ibb.co.com/QRxsYpv/user3.jpg",
+        rating: 9.5
+    },
+    {
+        id: 4,
+        name: "Farhan Khan",
+        comment: "A very memorable trip! Highly recommended.",
+        photo: "https://i.ibb.co.com/QFvHbkHs/user2.jpg",
+        rating: 9.3
+    },
+    {
+        id: 5,
+        name: "Sadia Alam",
+        comment: "Everything was well organized. Loved it!",
+        photo: "https://i.ibb.co.com/QRxsYpv/user3.jpg",
+        rating: 9.1
+    },
+    {
+        id: 6,
+        name: "Rakibul Islam",
+        comment: "Great experience with amazing views!",
+        photo: "https://i.ibb.co.com/QFvHbkHs/user2.jpg",
+        rating: 8.7
+    },
+    {
+        id: 7,
+        name: "Mahira Chowdhury",
+        comment: "The guide explained everything clearly.",
+        photo: "https://i.ibb.co.com/QRxsYpv/user3.jpg",
+        rating: 9.2
+    },
+    {
+        id: 8,
+        name: "Tanvir Ahmed",
+        comment: "Super friendly team and helpful guide!",
+        photo: "https://i.ibb.co.com/QFvHbkHs/user2.jpg",
+        rating: 8.9
+    },
+    {
+        id: 9,
+        name: "Samira Hossain",
+        comment: "Loved the hospitality and locations!",
+        photo: "https://i.ibb.co.com/QRxsYpv/user3.jpg",
+        rating: 9.4
+    },
+    {
+        id: 10,
+        name: "Abdullah Saad",
+        comment: "A wonderful trip with beautiful scenery!",
+        photo: "https://i.ibb.co.com/QFvHbkHs/user2.jpg",
+        rating: 8.6
+    },
+    {
+        id: 11,
+        name: "Faria Tasnim",
+        comment: "Very well planned tour. I enjoyed it a lot.",
+        photo: "https://i.ibb.co.com/QRxsYpv/user3.jpg",
+        rating: 9.0
+    },
+    {
+        id: 12,
+        name: "Imran Hossain",
+        comment: "Loved every moment of this journey!",
+        photo: "https://i.ibb.co.com/QFvHbkHs/user2.jpg",
+        rating: 9.3
+    },
+    {
+        id: 13,
+        name: "Raisa Karim",
+        comment: "A peaceful and relaxing experience!",
+        photo: "https://i.ibb.co.com/QFvHbkHs/user3.jpg",
+        rating: 8.9
+    }
 ];
 
 export default function Testimonials() {

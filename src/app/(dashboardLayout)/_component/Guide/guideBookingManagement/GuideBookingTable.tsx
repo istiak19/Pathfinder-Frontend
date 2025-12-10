@@ -66,7 +66,7 @@ const GuideBookingTable = ({ bookings }: BookingTableProps) => {
                 onEdit={handleEdit}
                 // onDelete={handleDelete}
                 getRowKey={(booking) => booking.id!}
-                emptyMessage="No doctors found"
+                emptyMessage="No listings found"
             />
             {/* Edit Doctor Form Dialog */}
             <StatusFormDialog

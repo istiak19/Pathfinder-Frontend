@@ -1,8 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const HeroSection: React.FC = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const router = useRouter();
+
+    const handleSearch = () => {
+        if (!searchTerm.trim()) return;
+        // Navigate to /explore with query param
+        router.push(`/explore?search=${encodeURIComponent(searchTerm.trim())}`);
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") handleSearch();
+    };
     return (
         <div
             className="relative w-full h-[75vh] md:h-[80vh] bg-cover bg-center"
@@ -44,29 +58,22 @@ const HeroSection: React.FC = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.7, duration: 0.6 }}
                 >
-                    <div className="
-        flex items-center 
-        bg-white/30 
-        backdrop-blur-xl 
-        shadow-[0_8px_30px_rgb(0,0,0,0.15)]
-        rounded-full 
-        px-5 py-4 
-        border border-white/40 
-        hover:bg-white/40
-        transition-all duration-300
-    ">
+                    <div
+                        className="flex items-center  bg-white/30 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.15)] rounded-full px-5 py-4 border border-white/40 hover:bg-white/40 transition-all duration-300"
+                    >
                         <input
                             type="text"
                             placeholder="Where are you going?"
-                            className="
-                w-full bg-transparent text-white
-                placeholder-white/50 
-                outline-none
-                px-2
-            "
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            className=" w-full bg-transparent text-white placeholder-white/50 outline-none px-2"
                         />
 
-                        <button className="bg-blue-600/80 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-semibold backdrop-blur-md transition-all">
+                        <button
+                            onClick={handleSearch}
+                            className="bg-blue-600/80 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-semibold backdrop-blur-md transition-all cursor-pointer"
+                        >
                             Search
                         </button>
                     </div>

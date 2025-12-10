@@ -16,9 +16,9 @@ interface Guide {
 }
 
 const guides: Guide[] = [
-  { id: 1, name: "Alice", photo: "/images/images.jpg", expertise: "History", rating: 4.9 },
-  { id: 2, name: "Bob", photo: "/images/images.jpg", expertise: "Food", rating: 4.8 },
-  { id: 3, name: "Carlos", photo: "/images/images.jpg", expertise: "Photography", rating: 5 },
+  { id: 1, name: "Alice", photo: "/images/images.jpg", expertise: "History", rating: 9.9 },
+  { id: 2, name: "Bob", photo: "/images/images.jpg", expertise: "Food", rating: 8.9 },
+  { id: 3, name: "Carlos", photo: "/images/images.jpg", expertise: "Art", rating: 8 },
 ];
 
 export default function TopGuides() {
