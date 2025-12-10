@@ -34,13 +34,12 @@ export default function BookListingDialog({
 
     const [date, setDate] = useState<Date | null>(null);
     const [guests, setGuests] = useState<number>(1);
-
     const handleContinue = () => {
         if (!date || guests < 1) return;
 
         const dateISO = date.toISOString();
         router.push(
-            `/booking?listingId=${listingId}&date=${dateISO}&guests=${guests}`
+            `/booking?listingId=${listingId}&date=${dateISO}&guests=${guests}}`
         );
     };
 
