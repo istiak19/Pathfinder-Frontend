@@ -27,7 +27,6 @@ const TripsCard = ({ booking }: TripsCardProps) => {
     const [rating, setRating] = useState(5);
     const [comment, setComment] = useState("");
     const [submitting, setSubmitting] = useState(false);
-    console.log(booking)
 
     const handleSubmitReview = async () => {
         if (rating < 1 || rating > 10) {

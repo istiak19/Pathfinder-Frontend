@@ -4,90 +4,146 @@ import { Booking } from "@/types/booking.interface";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
+import { useState } from "react";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface BookingCardProps {
     booking: Booking;
+    onDelete?: (id: string) => Promise<void>;
 }
 
-export default function BookingCard({ booking }: BookingCardProps) {
-    const statusColors: Record<string, string> = {
-        PENDING:
-            "bg-yellow-100 text-yellow-800 border-yellow-300 dark:bg-yellow-900 dark:text-yellow-200 dark:border-yellow-700",
-        ACCEPTED:
-            "bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700",
-        REJECTED:
-            "bg-red-100 text-red-800 border-red-300 dark:bg-red-900 dark:text-red-200 dark:border-red-700",
-        CONFIRMED:
-            "bg-green-100 text-green-800 border-green-300 dark:bg-green-900 dark:text-green-200 dark:border-green-700",
-        COMPLETED:
-            "bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-900 dark:text-emerald-200 dark:border-emerald-700",
-        CANCELLED:
-            "bg-gray-200 text-gray-700 border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600",
+export default function BookingCard({ booking, onDelete }: BookingCardProps) {
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const borderColors: Record<string, string> = {
+        PENDING: "border-yellow-400",
+        ACCEPTED: "border-blue-500",
+        REJECTED: "border-red-500",
+        CONFIRMED: "border-green-500",
+        COMPLETED: "border-emerald-500",
+        CANCELLED: "border-gray-500",
     };
 
     const isPayEnabled = booking.status === "ACCEPTED";
+    const canDelete = booking.status === "PENDING";
+
+    const handleConfirmDelete = async () => {
+        setIsDeleting(true);
+        await onDelete?.(booking.id);
+
+        // smooth slide-out animation
+        setTimeout(() => setIsDeleting(false), 500);
+    };
 
     return (
-        <div className="border rounded-xl p-4 shadow-sm bg-white dark:bg-gray-900 dark:border-neutral-700 space-y-3 transition">
-            {/* Status Badge */}
+        <div
+            className={cn(
+                "border rounded-xl p-4 shadow-sm bg-white dark:bg-gray-900 transition-all duration-300",
+                borderColors[booking.status],
+                isDeleting ? "translate-x-10 opacity-0" : "opacity-100"
+            )}
+        >
+            {/* Status & Date */}
             <div className="flex justify-between items-center">
-                <span
-                    className={cn(
-                        "px-3 py-1 text-sm font-medium rounded-full border",
-                        statusColors[booking.status] ||
-                        "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-                    )}
-                >
+                <span className="px-3 py-1 text-sm font-medium rounded-full border">
                     {booking.status}
                 </span>
 
-                <span className="text-gray-500 dark:text-gray-400 text-sm">
-                    Departure date: {format(new Date(booking.date), "dd MMM yyyy")}
+                <span className="text-gray-500 text-sm">
+                    Departure: {format(new Date(booking.date), "dd MMM yyyy")}
                 </span>
             </div>
 
             {/* Title */}
-            <h2 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
+            <h2 className="font-semibold text-lg mt-2">
                 {booking.listing.title}
             </h2>
 
             {/* Description */}
-            <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <p className="text-gray-600 text-sm">
                 {booking.listing.description}
             </p>
 
-            {/* Info Row */}
-            <div className="grid grid-cols-2 gap-2 text-sm text-gray-700 dark:text-gray-300 pt-2">
+            {/* Details */}
+            <div className="grid grid-cols-2 gap-2 text-sm mt-3">
                 <p><strong>City:</strong> {booking.listing.city}</p>
                 <p><strong>Guests:</strong> {booking.guests}</p>
                 <p><strong>Price:</strong> ${booking.listing.price}</p>
                 <p><strong>Payment:</strong> {booking.paymentStatus}</p>
             </div>
 
-            {/* Meeting Point */}
-            <div className="text-sm text-gray-600 dark:text-gray-400 pt-2">
+            <p className="text-sm text-gray-600 mt-2">
                 <strong>Meeting Point:</strong> {booking.listing.meetingPoint}
-            </div>
+            </p>
 
-            {/* Payment Button */}
-            <div className="pt-3">
+            {/* Action Buttons */}
+            <div className="flex items-center justify-between gap-2 mt-4">
+
+                {/* Pay Button */}
                 <Button
                     disabled={!isPayEnabled}
                     className={cn(
-                        "w-full cursor-pointer",
+                        "flex-1 cursor-pointer",
                         isPayEnabled
                             ? "bg-blue-600 hover:bg-blue-700 text-white"
-                            : "bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-400 cursor-not-allowed"
+                            : "bg-gray-300 text-gray-600 cursor-not-allowed"
                     )}
                     onClick={() => {
                         if (isPayEnabled) {
-                            // Redirect to Checkout page with bookingId
-                            window.location.href = `/tourist/dashboard/wishlist/payments/checkout/${booking.id}`;
+                            window.location.href =
+                                `/tourist/dashboard/wishlist/payments/checkout/${booking.id}`;
                         }
                     }}
                 >
-                    {isPayEnabled ? "Pay Now" : "Payment Not Available"}
+                    {isPayEnabled ? "Pay Now" : "Payment Not Ready"}
                 </Button>
+
+                {/* Delete Button */}
+                {canDelete && (
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button
+                                variant="destructive"
+                                className="flex-1 flex items-center justify-center gap-1 cursor-pointer"
+                            >
+                                <Trash2 className="h-4 w-4" />
+                                Delete
+                            </Button>
+                        </AlertDialogTrigger>
+
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Delete Booking?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. Are you sure you want to delete this booking?
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+
+                            <AlertDialogFooter>
+                                <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                    onClick={handleConfirmDelete}
+                                    className="bg-red-600 hover:bg-red-700 cursor-pointer text-white"
+                                >
+                                    Delete
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                )}
             </div>
         </div>
     );
