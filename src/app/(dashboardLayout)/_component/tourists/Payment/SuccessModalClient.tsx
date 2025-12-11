@@ -63,7 +63,7 @@ const PaymentPageClient = ({ type, title, description }: Props) => {
 
             {/* Re-open button when modal is closed */}
             {!open && (
-                <div className="absolute bottom-10 z-10">
+                <div className="absolute bottom-72 z-10">
                     <button
                         className="
                             px-5 py-2 

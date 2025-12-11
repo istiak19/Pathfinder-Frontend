@@ -15,10 +15,18 @@ import {
     DialogDescription,
 } from "@/components/ui/dialog";
 import { createReview } from "@/services/review/reviews.services";
+import Image from "next/image";
 
 interface TripsCardProps {
     booking: Booking;
 }
+
+const statusStyles: Record<string, string> = {
+    COMPLETED: "bg-green-100 text-green-700 border-green-300",
+    CANCELLED: "bg-red-100 text-red-700 border-red-300",
+    PENDING: "bg-yellow-100 text-yellow-700 border-yellow-300",
+    CONFIRMED: "bg-blue-100 text-blue-700 border-blue-300",
+};
 
 const TripsCard = ({ booking }: TripsCardProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +35,6 @@ const TripsCard = ({ booking }: TripsCardProps) => {
     const [rating, setRating] = useState(5);
     const [comment, setComment] = useState("");
     const [submitting, setSubmitting] = useState(false);
-    console.log(booking)
 
     const handleSubmitReview = async () => {
         if (rating < 1 || rating > 10) {
@@ -43,7 +50,6 @@ const TripsCard = ({ booking }: TripsCardProps) => {
 
         try {
             const payload = { bookingId: booking.id, rating, comment };
-
             const res = await createReview(payload);
 
             if (res.success) {
@@ -62,43 +68,88 @@ const TripsCard = ({ booking }: TripsCardProps) => {
     };
 
     return (
-        <div className="border rounded-2xl shadow-lg p-6 bg-white dark:bg-gray-800 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
-            <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
-                {booking.listing.title}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">{booking.listing.itinerary}</p>
+        <div
+            className="
+        rounded-2xl overflow-hidden 
+        shadow-md hover:shadow-xl 
+        transition-all duration-300
+        border border-gray-200 dark:border-gray-700 
+        bg-white dark:bg-gray-800
+      "
+        >
+            {/* Banner Image */}
+            <div className="relative w-full h-44">
+                <Image
+                    src={booking.listing?.images[0] || "/icons/Nature.jpg"}
+                    alt="tour banner"
+                    fill
+                    className="object-cover"
+                />
 
-            <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
-                <span>
-                    Departure: {format(new Date(booking.date), "dd MMM yyyy • hh:mm a")}
-                </span>
-                <span className="font-medium">{booking.status}</span>
-            </div>
-
-            <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                <span>Guests: {booking.guests}</span>
-                <span>Price: ${booking.payment?.amount || booking.listing.price}</span>
-            </div>
-
-            <div className="flex gap-3 mt-3">
-                <Button
-                    size="sm"
-                    variant="outline"
-                    className="cursor-pointer hover:scale-105 transition"
-                    onClick={() => setIsDetailsOpen(true)}
+                {/* Status Badge */}
+                <div
+                    className={`
+            absolute top-3 left-3 px-3 py-1 text-xs font-medium 
+            rounded-full border shadow-sm backdrop-blur-md
+            ${statusStyles[booking.status] || "bg-gray-200"}
+          `}
                 >
-                    View Details
-                </Button>
+                    {booking.status}
+                </div>
+            </div>
 
-                {booking.status === "COMPLETED" && (
+            {/* Content */}
+            <div className="p-6 space-y-4">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                    {booking.listing.title}
+                </h2>
+
+                <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2">
+                    {booking.listing.itinerary}
+                </p>
+
+                <div className="grid grid-cols-2 gap-2 text-sm text-gray-500 dark:text-gray-400">
+                    <p>
+                        <strong>Date:</strong> <br />
+                        {format(new Date(booking.date), "dd MMM yyyy • hh:mm a")}
+                    </p>
+
+                    <p>
+                        <strong>Guests:</strong> <br />
+                        {booking.guests}
+                    </p>
+
+                    <p>
+                        <strong>Price:</strong> <br />${booking.payment?.amount || booking.listing.price}
+                    </p>
+
+                    <p>
+                        <strong>Guide:</strong> <br />
+                        {booking.listing.guide?.name || "Not Assigned"}
+                    </p>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 pt-2">
                     <Button
                         size="sm"
-                        className="hover:scale-105 transition cursor-pointer"
-                        onClick={() => setIsModalOpen(true)}
+                        variant="outline"
+                        className="cursor-pointer hover:scale-105 transition rounded-lg"
+                        onClick={() => setIsDetailsOpen(true)}
                     >
-                        Leave Review
+                        View Details
                     </Button>
-                )}
+
+                    {booking.status === "COMPLETED" && (
+                        <Button
+                            size="sm"
+                            className="cursor-pointer hover:scale-105 transition rounded-lg"
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            Leave Review
+                        </Button>
+                    )}
+                </div>
             </div>
 
             {/* ⭐ Review Modal */}
@@ -107,27 +158,26 @@ const TripsCard = ({ booking }: TripsCardProps) => {
                     <DialogHeader>
                         <DialogTitle>Leave Your Review</DialogTitle>
                         <DialogDescription>
-                            Please provide your rating (1-10) and a comment for this tour.
+                            Please provide your rating (1–10) and comment.
                         </DialogDescription>
                     </DialogHeader>
 
                     <div className="space-y-4 mt-4">
+                        {/* Rating */}
                         <div>
-                            <label className="block mb-1 text-sm font-medium">Rating (1-10)</label>
+                            <label className="block mb-1 text-sm font-medium">Rating (1–10)</label>
                             <input
                                 type="number"
                                 min={1}
                                 max={10}
                                 value={rating}
-                                onChange={(e) => {
-                                    const value = Number(e.target.value);
-                                    if (value >= 1 && value <= 10) setRating(value);
-                                }}
+                                onChange={(e) => setRating(Number(e.target.value))}
                                 className="w-full p-2 border rounded-lg dark:bg-gray-800 dark:border-gray-700"
                             />
                             <div className="text-sm mt-1">{rating} / 10</div>
                         </div>
 
+                        {/* Comment */}
                         <div>
                             <label className="block mb-1 text-sm font-medium">Comment</label>
                             <textarea
@@ -141,50 +191,87 @@ const TripsCard = ({ booking }: TripsCardProps) => {
                     </div>
 
                     <DialogFooter className="mt-6">
-                        <Button
-                            variant="secondary"
-                            onClick={() => setIsModalOpen(false)}
-                            className="cursor-pointer"
-                        >
+                        <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
                             Cancel
                         </Button>
-                        <Button
-                            disabled={submitting}
-                            onClick={handleSubmitReview}
-                            className="cursor-pointer"
-                        >
+                        <Button disabled={submitting} onClick={handleSubmitReview}>
                             {submitting ? "Submitting..." : "Submit"}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
 
-            {/* View Details Modal */}
+
+            {/* Booking Details Modal */}
             <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
-                <DialogContent className="sm:max-w-lg bg-white dark:bg-gray-900 rounded-2xl p-6">
+                <DialogContent className="sm:max-w-lg bg-white/95 dark:bg-gray-900/95 rounded-2xl p-6 shadow-lg backdrop-blur-md space-y-5">
+
                     <DialogHeader>
-                        <DialogTitle>Booking Details</DialogTitle>
-                        <DialogDescription>
-                            Here are the full details of your booking.
+                        <DialogTitle className="text-xl font-semibold flex items-center gap-2">
+                            📋 Booking Details
+                        </DialogTitle>
+                        <DialogDescription className="text-gray-600 dark:text-gray-300 text-sm">
+                            Review the full details of your trip below.
                         </DialogDescription>
                     </DialogHeader>
 
-                    <div className="space-y-3 mt-4 text-sm">
-                        <p><strong>Title:</strong> {booking.listing.title}</p>
-                        <p><strong>Itinerary:</strong> {booking.listing.itinerary}</p>
-                        <p><strong>Date:</strong> {format(new Date(booking.date), "dd MMM yyyy • hh:mm a")}</p>
-                        <p><strong>Guests:</strong> {booking.guests}</p>
-                        <p><strong>Status:</strong> {booking.status}</p>
-                        <p><strong>Guide:</strong> {booking.listing.guide?.name || "Not Assigned"}</p>
-                        <p><strong>Price:</strong> ${booking.payment?.amount || booking.listing.price}</p>
-                        <p><strong>Payment Status:</strong> {booking.payment?.status || "N/A"}</p>
+                    {/* Booking Info Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-300">
+                        <div>
+                            <p className="font-medium">Title</p>
+                            <p>{booking.listing.title}</p>
+                        </div>
+
+                        <div>
+                            <p className="font-medium">Itinerary</p>
+                            <p>{booking.listing.itinerary}</p>
+                        </div>
+
+                        <div>
+                            <p className="font-medium">Date</p>
+                            <p>{format(new Date(booking.date), "dd MMM yyyy • hh:mm a")}</p>
+                        </div>
+
+                        <div>
+                            <p className="font-medium">Guests</p>
+                            <p>{booking.guests}</p>
+                        </div>
+
+                        <div>
+                            <p className="font-medium">Status</p>
+                            <p className={`inline-block px-2 py-1 rounded-full text-xs font-medium 
+            ${statusStyles[booking.status] || "bg-gray-200 text-gray-700 border-gray-300"}`}>
+                                {booking.status}
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className="font-medium">Guide</p>
+                            <p>{booking.listing.guide?.name || "Not Assigned"}</p>
+                        </div>
+
+                        <div>
+                            <p className="font-medium">Price</p>
+                            <p>${booking.payment?.amount || booking.listing.price}</p>
+                        </div>
+
+                        <div>
+                            <p className="font-medium">Payment Status</p>
+                            <p>{booking.payment?.status || "N/A"}</p>
+                        </div>
+
+                        <div className="sm:col-span-2">
+                            <p className="font-medium">Meeting Point</p>
+                            <p>{booking.listing.meetingPoint}</p>
+                        </div>
                     </div>
 
-                    <DialogFooter className="mt-6">
+                    {/* Close Button */}
+                    <DialogFooter className="mt-4 flex justify-end">
                         <Button
                             variant="secondary"
-                            className="cursor-pointer"
                             onClick={() => setIsDetailsOpen(false)}
+                            className="rounded-lg px-4 cursor-pointer"
                         >
                             Close
                         </Button>
