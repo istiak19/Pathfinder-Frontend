@@ -23,7 +23,7 @@ export default function NavbarClient({ isAuthenticated, role }: NavbarClientProp
         { href: "/", label: "Home" },
         { href: "/about", label: "About" },
         { href: "/explore", label: "Explore Tours" },
-        // { href: "/become-guide", label: "Become Guide" },
+        { href: "/become-guide", label: "Become Guide" },
     ];
 
     const dashboardLink =
